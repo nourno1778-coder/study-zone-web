@@ -4,80 +4,539 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Zone | المنصة الرسمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* المتغيرات اللونية الأساسية */
         :root {
             --primary: #5865F2;
-            --accent: #00d2ff;
-            --bg: #05070a;
-            --card-bg: #0d1117;
-            --text-color: #e6edf3;
-            --text-dim: #8b949e;
-            --gradient: linear-gradient(135deg, #5865F2 0%, #00d2ff 100%);
-            --transition: all 0.3s ease;
+            --primary-hover: #4752C4;
+            --accent: #00f2fe;
+            --bg-dark: #090a0f;
+            --surface: #12151e;
+            --surface-light: #1a1e2a;
+            --text-main: #f8f9fa;
+            --text-muted: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --gradient-glow: linear-gradient(135deg, rgba(88,101,242,0.15) 0%, rgba(0,242,254,0.15) 100%);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        /* إعادة ضبط الإعدادات الافتراضية */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
 
-        body { background-color: var(--bg); color: var(--text-color); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-        /* Navbar */
-        nav { position: fixed; top: 0; width: 100%; padding: 20px 8%; background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; text-decoration: none; color: #fff; }
-        .logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--primary); }
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: var(--transition); }
-        .nav-links a:hover { color: var(--primary); }
-        .btn-add { background: var(--gradient); padding: 10px 25px; border-radius: 8px; color: #fff !important; font-weight: bold; box-shadow: 0 5px 15px rgba(88,101,242,0.3); }
+        /* تأثيرات الإضاءة في الخلفية */
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.15;
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .bg-glow-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: var(--accent);
+            filter: blur(150px);
+            opacity: 0.1;
+            border-radius: 50%;
+            bottom: -100px;
+            left: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-        /* Hero Section */
-        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; background: radial-gradient(circle at center, rgba(88,101,242,0.15) 0%, transparent 70%); }
-        .hero img.bot-img { width: 180px; height: 180px; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 0 50px rgba(88,101,242,0.4); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .hero h1 { font-size: 4rem; margin-bottom: 20px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.3rem; max-width: 700px; color: var(--text-dim); margin-bottom: 40px; }
+        /* شريط التنقل (Navbar) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 8%;
+            background: rgba(9, 10, 15, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
 
-        /* Stats Section */
-        .stats-wrapper { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
-        .stat-card { background: var(--card-bg); padding: 25px 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
-        .stat-card:hover { transform: translateY(-10px); border-color: var(--primary); }
-        .stat-card h2 { font-size: 2.5rem; color: #fff; }
-        .stat-card p { color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text-main);
+            letter-spacing: 1px;
+        }
 
-        /* Commands Section */
-        .commands-section { padding: 100px 8%; }
-        .tabs-header { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
-        .tab-btn { padding: 12px 25px; border: none; background: var(--card-bg); color: #fff; cursor: pointer; border-radius: 10px; font-weight: bold; transition: var(--transition); border: 1px solid rgba(255,255,255,0.1); }
-        .tab-btn.active { background: var(--primary); box-shadow: 0 5px 15px rgba(88,101,242,0.4); }
-        .tab-content { display: none; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; animation: fadeIn 0.5s ease; }
-        .tab-content.active { display: grid; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .cmd-card { background: var(--card-bg); padding: 25px; border-radius: 15px; border-right: 4px solid var(--primary); }
-        .cmd-card h4 { font-family: monospace; font-size: 1.2rem; color: #fff; margin-bottom: 10px; background: rgba(255,255,255,0.05); display: inline-block; padding: 4px 10px; border-radius: 5px; }
-        .cmd-card p { color: var(--text-dim); font-size: 0.95rem; }
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+        }
 
-        /* Developer Section */
-        .dev-section { padding: 100px 8%; background: rgba(255,255,255,0.02); }
-        .dev-container { max-width: 1000px; margin: 0 auto; background: var(--card-bg); border-radius: 30px; display: flex; align-items: center; gap: 50px; padding: 50px; border: 1px solid rgba(255,255,255,0.05); }
-        .dev-img { width: 250px; height: 250px; border-radius: 20px; object-fit: cover; border: 3px solid var(--primary); }
-        .dev-info h3 { font-size: 2.5rem; margin-bottom: 10px; }
-        .dev-id { color: var(--primary); font-family: monospace; margin-bottom: 20px; display: block; font-size: 1.2rem; }
-        .social-box { display: flex; gap: 15px; margin-top: 25px; }
-        .social-link { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: #1a1f26; color: #fff; text-decoration: none; border-radius: 12px; font-size: 1.5rem; transition: var(--transition); }
-        .social-link:hover { background: var(--primary); transform: scale(1.1); }
-        .social-link.insta:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
 
-        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-dim); }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
 
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
-            .dev-container { flex-direction: column; text-align: center; padding: 30px; }
-            .dev-img { width: 180px; height: 180px; }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background: var(--primary);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 12px 30px;
+            border-radius: 12px;
+            color: #fff !important;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
+            transition: var(--transition-smooth);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(88, 101, 242, 0.4);
+        }
+
+        /* القسم الرئيسي (Hero) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 50px;
+            position: relative;
+        }
+
+        .bot-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(88,101,242,0.3);
+            border: 2px solid rgba(255,255,255,0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to left, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 650px;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+        }
+
+        /* الإحصائيات */
+        .stats-container {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat-box {
+            background: var(--surface);
+            padding: 25px 45px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+            min-width: 200px;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(88,101,242,0.1);
+        }
+
+        .stat-box h2 {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .stat-box p {
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* قسم الأوامر الاحترافي (Accordion System) */
+        .commands-section {
+            padding: 100px 8%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            font-size: 1.2rem;
+        }
+
+        .accordion-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .accordion-item {
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .accordion-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.15);
+        }
+
+        .accordion-header {
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: var(--surface);
+            transition: var(--transition-smooth);
+        }
+
+        .accordion-header:hover {
+            background: var(--surface-light);
+        }
+
+        .accordion-header h3 {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .accordion-header h3 i {
+            color: var(--primary);
+        }
+
+        .icon-toggle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform 0.4s ease;
+        }
+
+        .accordion-item.active .icon-toggle {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .accordion-body {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        /* كروت الأوامر الداخلية */
+        .cmd-card {
+            background: var(--surface-light);
+            padding: 20px;
+            border-radius: 12px;
+            border-right: 4px solid var(--primary);
+            position: relative;
+        }
+
+        .cmd-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .cmd-name {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            background: rgba(0, 242, 254, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
+            letter-spacing: 1px;
+        }
+
+        .cmd-desc {
+            color: var(--text-main);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .cmd-usage {
+            background: var(--bg-dark);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .cmd-usage-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cmd-code {
+            color: #a6e22e;
+            font-family: monospace;
+            font-size: 1rem;
+            direction: ltr;
+            text-align: left;
+            display: block;
+        }
+
+        /* قسم المطور (بدون الصورة الشخصية) */
+        .dev-section {
+            padding: 100px 8%;
+            background: linear-gradient(to bottom, transparent, rgba(88,101,242,0.05));
+        }
+
+        .dev-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--surface);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            padding: 60px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dev-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        /* الأفاتار التقني بدلاً من الصورة */
+        .dev-avatar {
+            min-width: 200px;
+            height: 200px;
+            background: var(--surface-light);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--primary);
+            border: 2px dashed var(--border-color);
+            position: relative;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .dev-avatar::after {
+            content: '< / >';
+            position: absolute;
+            bottom: -15px;
+            background: var(--bg-dark);
+            font-size: 1rem;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            color: var(--accent);
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .dev-info h3 {
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .dev-tag {
+            display: inline-block;
+            background: rgba(88,101,242,0.1);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            border: 1px solid rgba(88,101,242,0.2);
+        }
+
+        .dev-info p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-light);
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-color);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(88,101,242,0.3);
+        }
+
+        /* الفوتر */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            background: var(--bg-dark);
+        }
+
+        footer span {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* التصميم المتجاوب (الهواتف) */
+        @media (max-width: 990px) {
+            .hero h1 { font-size: 3rem; }
+            .dev-container { flex-direction: column; text-align: center; padding: 40px 20px; }
+            .dev-avatar { margin-bottom: 20px; }
+            .social-links { justify-content: center; }
+            .nav-links { display: none; } /* يمكن إضافة قائمة هامبرغر لاحقاً */
+        }
+        @media (max-width: 600px) {
+            .accordion-body { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+            .stat-box { width: 100%; }
         }
     </style>
 </head>
 <body>
+
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
 
     <nav>
         <a href="#" class="logo">
@@ -86,99 +545,95 @@
         </a>
         <ul class="nav-links">
             <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#commands">الأوامر</a></li>
-            <li><a href="#developer">المطور</a></li>
+            <li><a href="#commands">قاعدة الأوامر</a></li>
+            <li><a href="#developer">عن المطور</a></li>
         </ul>
-        <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-add">إضافة البوت</a>
+        <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-primary">
+            <i class="fab fa-discord" style="margin-left: 8px;"></i> إضافة البوت
+        </a>
     </nav>
 
     <section class="hero" id="home">
         <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png" alt="Study Zone" class="bot-img">
-        <h1>بوت المذاكرة الأول</h1>
-        <p>نظام احترافي متكامل مصمم خصيصاً لتعزيز الإنتاجية الدراسية داخل الديسكورد، يجمع بين حساب الوقت، التنافس الشريف، والجوائز الرقمية.</p>
+        <h1>رفيقك الأول في <span>رحلة المذاكرة</span></h1>
+        <p>نظام احترافي متكامل داخل ديسكورد، يراقب وقت دراستك، يحفزك بالتنافس مع أصدقائك، ويكافئك بالعملات الرقمية والخلفيات الحصرية.</p>
         
-        <div class="stats-wrapper">
-            <div class="stat-card">
+        <div class="stats-container">
+            <div class="stat-box">
                 <h2>+75</h2>
-                <p>سيرفر يستخدم البوت</p>
+                <p>سيرفر مفعل</p>
             </div>
-            <div class="stat-card">
-                <h2>+2500</h2>
-                <p>مستخدم مسجل</p>
+            <div class="stat-box">
+                <h2>+2.5K</h2>
+                <p>طالب مسجل</p>
             </div>
-            <div class="stat-card">
+            <div class="stat-box">
                 <h2>+500</h2>
-                <p>مستخدم يومي نشط</p>
+                <p>مستخدم يومي</p>
             </div>
         </div>
     </section>
 
     <section class="commands-section" id="commands">
-        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">مركز الأوامر التفاعلي</h2>
-        
-        <div class="tabs-header">
-            <button class="tab-btn active" onclick="showTab('tab-std')">أوامر الطلاب</button>
-            <button class="tab-btn" onclick="showTab('tab-adm')">أوامر الإدارة</button>
-            <button class="tab-btn" onclick="showTab('tab-log')">أنظمة اللوج</button>
-            <button class="tab-btn" onclick="showTab('tab-dev')">التحكم بالمشروع</button>
-        </div>
+        <h2 class="section-title">دليل الأوامر الذكي</h2>
+        <p class="section-subtitle">اكتشف الإمكانيات الكاملة للبوت عبر تصفح الأقسام أدناه</p>
 
-        <div id="tab-std" class="tab-content active">
-            <div class="cmd-card"><h4>/start</h4><p>بدء عداد المذاكرة الشخصي وتسجيل وقت النشاط.</p></div>
-            <div class="cmd-card"><h4>/stop</h4><p>إنهاء الجلسة وحفظ إجمالي الدقائق في قاعدة البيانات.</p></div>
-            <div class="cmd-card"><h4>/coins</h4><p>عرض محفظتك المالية وكارت البروفايل الخاص بك.</p></div>
-            <div class="cmd-card"><h4>/top</h4><p>استعراض قائمة المتصدرين (أوائل المذاكرة) في السيرفر.</p></div>
-            <div class="cmd-card"><h4>/give</h4><p>تحويل كمية من الكوينز كهدية لمستخدم آخر.</p></div>
-            <div class="cmd-card"><h4>/help</h4><p>الحصول على مساعدة فورية لجميع وظائف البوت.</p></div>
-        </div>
-
-        <div id="tab-adm" class="tab-content">
-            <div class="cmd-card"><h4>/addcoin</h4><p>منح كوينز كجائزة لمستخدم متميز.</p></div>
-            <div class="cmd-card"><h4>/take</h4><p>سحب كوينز من رصيد مستخدم معين.</p></div>
-            <div class="cmd-card"><h4>/clearbgs</h4><p>إعادة ضبط خلفية البروفايل للعضو إلى الشكل الافتراضي.</p></div>
-        </div>
-
-        <div id="tab-log" class="tab-content">
-            <div class="cmd-card"><h4>/setlog</h4><p>تخصيص قناة لإرسال تقارير (بدء/انتهاء) المذاكرة.</p></div>
-            <div class="cmd-card"><h4>/setloggive</h4><p>مراقبة سجلات تحويل الأموال بين الطلاب.</p></div>
-            <div class="cmd-card"><h4>/setlogbgshop</h4><p>تتبع عمليات شراء الخلفيات من المتجر.</p></div>
-        </div>
-
-        <div id="tab-dev" class="tab-content">
-            <div class="cmd-card"><h4>/system</h4><p>مراقبة أداء السيرفر واستهلاك موارد النظام.</p></div>
-            <div class="cmd-card"><h4>/maintenance</h4><p>تفعيل وضع الصيانة للتحديثات البرمجية.</p></div>
-            <div class="cmd-card"><h4>/broadcast</h4><p>إرسال رسالة رسمية لجميع السيرفرات المشتركة.</p></div>
-            <div class="cmd-card"><h4>/blacklist</h4><p>حظر مستخدمين أو سيرفرات من الوصول لخدمات البوت.</p></div>
-        </div>
-    </section>
-
-    <section class="dev-section" id="developer">
-        <h2 style="text-align: center; margin-bottom: 50px;">خلف الكواليس</h2>
-        <div class="dev-container">
-            <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200604165341277/IMG_20260421_190355.jpg" alt="Developer" class="dev-img">
-            <div class="dev-info">
-                <h3>Yasser</h3>
-                <span class="dev-id">Developer ID: c.u7</span>
-                <p>صاحب ومطور المشروع، قام ببناء "Study Zone" من منطلق الشغف بالتطوير وبهدف خلق أداة تعليمية حقيقية تخدم الطلاب. يسعى المطور دائماً لتقديم حلول برمجية مبتكرة تجمع بين السرعة، الموثوقية، وسهولة الاستخدام لتوفير أفضل تجربة لمجتمع الديسكورد العربي.</p>
-                <div class="social-box">
-                    <a href="https://discord.com/users/1082902543597834240" target="_blank" class="social-link" title="Discord"><i class="fab fa-discord"></i></a>
-                    <a href="https://www.instagram.com/c_7eh?igsh=MW9mYjQ3dGpvMnM2Mg==" target="_blank" class="social-link insta" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <div class="accordion-container">
+            
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3><i class="fas fa-user-graduate"></i> أوامر الطلاب الأساسية</h3>
+                    <i class="fas fa-chevron-down icon-toggle"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-body">
+                        <div class="cmd-card">
+                            <div class="cmd-header">
+                                <span class="cmd-name">/start</span>
+                            </div>
+                            <p class="cmd-desc">بدء جلسة المذاكرة وحساب الوقت بشكل دقيق.</p>
+                            <div class="cmd-usage">
+                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
+                                <span class="cmd-code">/start</span>
+                            </div>
+                        </div>
+                        <div class="cmd-card">
+                            <div class="cmd-header">
+                                <span class="cmd-name">/stop</span>
+                            </div>
+                            <p class="cmd-desc">إيقاف الجلسة الحالية وحفظ الدقائق في رصيدك.</p>
+                            <div class="cmd-usage">
+                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
+                                <span class="cmd-code">/stop</span>
+                            </div>
+                        </div>
+                        <div class="cmd-card">
+                            <div class="cmd-header">
+                                <span class="cmd-name">/coins</span>
+                            </div>
+                            <p class="cmd-desc">استعراض رصيدك المالي وبطاقة البروفايل الخاص بك.</p>
+                            <div class="cmd-usage">
+                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
+                                <span class="cmd-code">/coins [@user]</span>
+                            </div>
+                        </div>
+                        <div class="cmd-card">
+                            <div class="cmd-header">
+                                <span class="cmd-name">/top</span>
+                            </div>
+                            <p class="cmd-desc">عرض لوحة الصدارة لأكثر الطلاب مذاكرة في السيرفر.</p>
+                            <div class="cmd-usage">
+                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
+                                <span class="cmd-code">/top</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <footer>
-        <p>Study Zone &copy; 2024 - جميع الحقوق محفوظة للمطور Yasser</p>
-    </footer>
-
-    <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-    </script>
-</body>
-</html>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3><i class="fas fa-shield-alt"></i> أوامر الإدارة والتحكم</h3>
+                    <i class="fas fa-chevron-down icon-toggle"></i>
+                </div>
+ 
