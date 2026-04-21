@@ -3,158 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Zone | المنصة الرسمية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Study Zone | العصر الجديد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* المتغيرات اللونية الأساسية */
         :root {
+            --bg-base: #030305;
+            --bg-surface: #0a0a12;
+            --bg-card: rgba(20, 20, 30, 0.6);
             --primary: #5865F2;
-            --primary-hover: #4752C4;
-            --accent: #00f2fe;
-            --bg-dark: #090a0f;
-            --surface: #12151e;
-            --surface-light: #1a1e2a;
-            --text-main: #f8f9fa;
-            --text-muted: #9ca3af;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --gradient-glow: linear-gradient(135deg, rgba(88,101,242,0.15) 0%, rgba(0,242,254,0.15) 100%);
-            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-glow: rgba(88, 101, 242, 0.4);
+            --accent: #F91880;
+            --text-main: #ffffff;
+            --text-muted: #8b949e;
+            --border: rgba(255, 255, 255, 0.05);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* إعادة ضبط الإعدادات الافتراضية */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-base);
             color: var(--text-main);
-            line-height: 1.7;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(88, 101, 242, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(249, 24, 128, 0.05), transparent 25%);
+            background-attachment: fixed;
         }
 
-        /* تأثيرات الإضاءة في الخلفية */
-        .bg-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: var(--primary);
-            filter: blur(150px);
-            opacity: 0.15;
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .bg-glow-2 {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: var(--accent);
-            filter: blur(150px);
-            opacity: 0.1;
-            border-radius: 50%;
-            bottom: -100px;
-            left: -100px;
-            z-index: -1;
-            pointer-events: none;
-        }
+        /* تأثيرات ظهور العناصر (JS Animation Classes) */
+        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* شريط التنقل (Navbar) */
+        /* Floating Navbar */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 15px 8%;
-            background: rgba(9, 10, 15, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(10, 10, 18, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 10px 20px 10px 10px;
             z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-            transition: var(--transition-smooth);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        .logo {
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; }
+        .logo img { width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 0 15px var(--primary-glow); }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 700; transition: var(--transition); font-size: 1rem; }
+        .nav-links a:hover { color: #fff; }
+        
+        .btn-add {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-decoration: none;
-            color: var(--text-main);
-            letter-spacing: 1px;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 0 20px var(--primary-glow);
         }
+        .btn-add:hover { background: #4752c4; transform: scale(1.05); }
 
-        .logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            border: 2px solid var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            right: 0;
-            background: var(--primary);
-            transition: var(--transition-smooth);
-        }
-
-        .nav-links a:hover {
-            color: var(--text-main);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            padding: 12px 30px;
-            border-radius: 12px;
-            color: #fff !important;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
-            transition: var(--transition-smooth);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(88, 101, 242, 0.4);
-        }
-
-        /* القسم الرئيسي (Hero) */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -162,381 +89,208 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 120px 20px 50px;
+            padding: 150px 20px 50px;
             position: relative;
         }
 
-        .bot-img {
-            width: 160px;
-            height: 160px;
-            border-radius: 30px;
+        .bot-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 35px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
             margin-bottom: 30px;
-            box-shadow: 0 0 40px rgba(88,101,242,0.3);
-            border: 2px solid rgba(255,255,255,0.1);
-            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 0 50px rgba(88, 101, 242, 0.2);
+            animation: float 5s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         .hero h1 {
             font-size: 4.5rem;
-            font-weight: 800;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
             margin-bottom: 20px;
-            background: linear-gradient(to left, #fff, var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, #fff 30%, var(--text-muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .hero h1 span { color: var(--primary); -webkit-text-fill-color: var(--primary); }
+        .hero p { font-size: 1.3rem; color: var(--text-muted); max-width: 600px; font-weight: 500; margin-bottom: 50px; }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 650px;
+        /* Stats Glass Cards */
+        .stats-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .stat-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 25px 40px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            min-width: 180px;
+            transition: var(--transition);
+        }
+        .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(88, 101, 242, 0.05); }
+        .stat-card h3 { font-size: 2.5rem; font-weight: 900; color: #fff; }
+        .stat-card p { color: var(--primary); font-weight: 700; font-size: 1rem; }
+
+        /* Modern Commands Section */
+        .commands-section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 3rem; font-weight: 900; color: #fff; }
+        .section-header p { color: var(--text-muted); font-size: 1.2rem; margin-top: 10px; }
+
+        .commands-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        .tabs-nav { display: flex; flex-direction: column; gap: 10px; }
+        .tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: var(--radius-md);
             color: var(--text-muted);
-            margin-bottom: 50px;
-        }
-
-        /* الإحصائيات */
-        .stats-container {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .stat-box {
-            background: var(--surface);
-            padding: 25px 45px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-            transition: var(--transition-smooth);
-            min-width: 200px;
-        }
-
-        .stat-box:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(88,101,242,0.1);
-        }
-
-        .stat-box h2 {
-            font-size: 2.5rem;
-            color: var(--text-main);
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .stat-box p {
-            color: var(--primary);
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            margin: 0;
-        }
-
-        /* قسم الأوامر الاحترافي (Accordion System) */
-        .commands-section {
-            padding: 100px 8%;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            color: var(--text-main);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 60px;
-            font-size: 1.2rem;
-        }
-
-        .accordion-container {
-            max-width: 900px;
-            margin: 0 auto;
+            text-align: right;
+            cursor: pointer;
+            transition: var(--transition);
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .tab-btn i { font-size: 1.4rem; color: #444; transition: var(--transition); }
+        .tab-btn:hover { background: rgba(255,255,255,0.05); }
+        .tab-btn.active {
+            background: rgba(88, 101, 242, 0.1);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: inset 4px 0 0 var(--primary);
+        }
+        .tab-btn.active i { color: var(--primary); }
+
+        .tabs-content-area {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-pane { display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; animation: fadeIn 0.5s ease forwards; }
+        .tab-pane.active { display: grid; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Command Cards */
+        .cmd-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .cmd-item:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .cmd-item::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            opacity: 0; transition: var(--transition);
+        }
+        .cmd-item:hover::before { opacity: 1; }
+
+        .cmd-name {
+            display: inline-block;
+            background: rgba(88, 101, 242, 0.15);
+            color: #a6b1fa;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: 1px solid rgba(88, 101, 242, 0.3);
+        }
+        .cmd-desc { color: #fff; font-size: 1rem; font-weight: 500; margin-bottom: 20px; line-height: 1.6; }
+        
+        .cmd-terminal {
+            background: #000;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #222;
+        }
+        .cmd-terminal span.label { display: block; color: #555; font-size: 0.8rem; margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
+        .cmd-terminal code { color: #a6e22e; font-family: monospace; font-size: 0.95rem; direction: ltr; display: block; }
+
+        /* Developer Bento Box */
+        .bento-section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
             gap: 20px;
         }
 
-        .accordion-item {
-            background: var(--surface);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: var(--transition-smooth);
-        }
-
-        .accordion-item.active {
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.15);
-        }
-
-        .accordion-header {
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            background: var(--surface);
-            transition: var(--transition-smooth);
-        }
-
-        .accordion-header:hover {
-            background: var(--surface-light);
-        }
-
-        .accordion-header h3 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .accordion-header h3 i {
-            color: var(--primary);
-        }
-
-        .icon-toggle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            transition: transform 0.4s ease;
-        }
-
-        .accordion-item.active .icon-toggle {
-            transform: rotate(180deg);
-            color: var(--primary);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(0,0,0,0.2);
-        }
-
-        .accordion-body {
-            padding: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        /* كروت الأوامر الداخلية */
-        .cmd-card {
-            background: var(--surface-light);
-            padding: 20px;
-            border-radius: 12px;
-            border-right: 4px solid var(--primary);
-            position: relative;
-        }
-
-        .cmd-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .cmd-name {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--accent);
-            background: rgba(0, 242, 254, 0.1);
-            padding: 5px 12px;
-            border-radius: 8px;
-            letter-spacing: 1px;
-        }
-
-        .cmd-desc {
-            color: var(--text-main);
-            font-size: 1rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .cmd-usage {
-            background: var(--bg-dark);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px dashed var(--border-color);
-        }
-
-        .cmd-usage-title {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cmd-code {
-            color: #a6e22e;
-            font-family: monospace;
-            font-size: 1rem;
-            direction: ltr;
-            text-align: left;
-            display: block;
-        }
-
-        /* قسم المطور (بدون الصورة الشخصية) */
-        .dev-section {
-            padding: 100px 8%;
-            background: linear-gradient(to bottom, transparent, rgba(88,101,242,0.05));
-        }
-
-        .dev-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--surface);
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            padding: 60px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dev-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-        }
-
-        /* الأفاتار التقني بدلاً من الصورة */
-        .dev-avatar {
-            min-width: 200px;
-            height: 200px;
-            background: var(--surface-light);
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: var(--primary);
-            border: 2px dashed var(--border-color);
-            position: relative;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        .dev-avatar::after {
-            content: '< / >';
-            position: absolute;
-            bottom: -15px;
-            background: var(--bg-dark);
-            font-size: 1rem;
-            padding: 5px 15px;
-            border-radius: 20px;
-            border: 1px solid var(--primary);
-            color: var(--accent);
-            font-weight: bold;
-            font-family: monospace;
-        }
-
-        .dev-info h3 {
-            font-size: 2.8rem;
-            margin-bottom: 5px;
-            font-weight: 800;
-        }
-
-        .dev-tag {
-            display: inline-block;
-            background: rgba(88,101,242,0.1);
-            color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-family: monospace;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            border: 1px solid rgba(88,101,242,0.2);
-        }
-
-        .dev-info p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-btn {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--surface-light);
-            color: var(--text-main);
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 1.3rem;
-            transition: var(--transition-smooth);
-            border: 1px solid var(--border-color);
-        }
-
-        .social-btn:hover {
-            transform: translateY(-5px);
-            background: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 10px 20px rgba(88,101,242,0.3);
-        }
-
-        /* الفوتر */
-        footer {
-            text-align: center;
+        .bento-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             padding: 40px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            background: var(--bg-dark);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
+        .bento-box:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-3px); }
 
-        footer span {
-            color: var(--primary);
-            font-weight: bold;
+        /* Box 1: Main Info */
+        .box-main { grid-column: span 2; display: flex; flex-direction: column; justify-content: center; }
+        .dev-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(249, 24, 128, 0.1); color: var(--accent); padding: 5px 15px; border-radius: 100px; font-weight: bold; font-size: 0.9rem; margin-bottom: 20px; width: fit-content; border: 1px solid rgba(249, 24, 128, 0.2); }
+        .box-main h3 { font-size: 3rem; font-weight: 900; color: #fff; margin-bottom: 15px; }
+        .box-main p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; max-width: 90%; }
+
+        /* Box 2: Avatar Icon */
+        .box-avatar { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(88,101,242,0.1), rgba(0,0,0,0)); }
+        .cyber-icon { font-size: 6rem; color: var(--primary); filter: drop-shadow(0 0 20px var(--primary-glow)); }
+
+        /* Box 3: Socials */
+        .box-social { grid-column: span 3; display: flex; justify-content: center; gap: 20px; padding: 30px !important; }
+        .social-circle {
+            width: 60px; height: 60px; border-radius: 50%; background: var(--bg-surface);
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            color: #fff; text-decoration: none; border: 1px solid var(--border);
+            transition: var(--transition);
         }
+        .social-circle:hover { background: var(--primary); transform: scale(1.1); box-shadow: 0 10px 20px var(--primary-glow); border-color: var(--primary); }
 
-        /* التصميم المتجاوب (الهواتف) */
+        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-muted); font-weight: 500; }
+        footer span { color: var(--primary); font-weight: 800; }
+
+        /* Mobile Adjustments */
         @media (max-width: 990px) {
+            .commands-layout { grid-template-columns: 1fr; }
+            .tabs-nav { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .tab-btn { min-width: 200px; justify-content: center; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .box-main, .box-social, .box-avatar { grid-column: span 1; }
+            .box-avatar { padding: 60px 0; }
             .hero h1 { font-size: 3rem; }
-            .dev-container { flex-direction: column; text-align: center; padding: 40px 20px; }
-            .dev-avatar { margin-bottom: 20px; }
-            .social-links { justify-content: center; }
-            .nav-links { display: none; } /* يمكن إضافة قائمة هامبرغر لاحقاً */
-        }
-        @media (max-width: 600px) {
-            .accordion-body { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.2rem; }
-            .stat-box { width: 100%; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
-
-    <div class="bg-glow"></div>
-    <div class="bg-glow-2"></div>
 
     <nav>
         <a href="#" class="logo">
@@ -546,94 +300,136 @@
         <ul class="nav-links">
             <li><a href="#home">الرئيسية</a></li>
             <li><a href="#commands">قاعدة الأوامر</a></li>
-            <li><a href="#developer">عن المطور</a></li>
+            <li><a href="#developer">الأنظمة والمطور</a></li>
         </ul>
-        <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-primary">
-            <i class="fab fa-discord" style="margin-left: 8px;"></i> إضافة البوت
+        <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-add">
+            <i class="fab fa-discord"></i> أضف البوت
         </a>
     </nav>
 
     <section class="hero" id="home">
-        <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png" alt="Study Zone" class="bot-img">
-        <h1>رفيقك الأول في <span>رحلة المذاكرة</span></h1>
-        <p>نظام احترافي متكامل داخل ديسكورد، يراقب وقت دراستك، يحفزك بالتنافس مع أصدقائك، ويكافئك بالعملات الرقمية والخلفيات الحصرية.</p>
+        <div class="bot-avatar reveal">
+            <i class="fas fa-brain"></i>
+        </div>
+        <h1 class="reveal">ارتقِ بمستوى <span>سيرفرك</span> الدراسي</h1>
+        <p class="reveal">تجربة متكاملة مصممة بأحدث التقنيات لتحويل وقت المذاكرة إلى رحلة تنافسية ممتعة داخل ديسكورد، مع نظام اقتصاد وجوائز رقمية.</p>
         
-        <div class="stats-container">
-            <div class="stat-box">
-                <h2>+75</h2>
-                <p>سيرفر مفعل</p>
+        <div class="stats-grid reveal">
+            <div class="stat-card">
+                <h3>+75</h3>
+                <p>سيرفر نشط</p>
             </div>
-            <div class="stat-box">
-                <h2>+2.5K</h2>
-                <p>طالب مسجل</p>
+            <div class="stat-card">
+                <h3>+2.5K</h3>
+                <p>مستخدم مسجل</p>
             </div>
-            <div class="stat-box">
-                <h2>+500</h2>
-                <p>مستخدم يومي</p>
+            <div class="stat-card">
+                <h3>+500</h3>
+                <p>طالب يومياً</p>
             </div>
         </div>
     </section>
 
-    <section class="commands-section" id="commands">
-        <h2 class="section-title">دليل الأوامر الذكي</h2>
-        <p class="section-subtitle">اكتشف الإمكانيات الكاملة للبوت عبر تصفح الأقسام أدناه</p>
+    <section class="commands-section reveal" id="commands">
+        <div class="section-header">
+            <h2>مركز التحكم والأوامر</h2>
+            <p>تصفح إمكانيات البوت من خلال الواجهة التفاعلية</p>
+        </div>
 
-        <div class="accordion-container">
-            
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3><i class="fas fa-user-graduate"></i> أوامر الطلاب الأساسية</h3>
-                    <i class="fas fa-chevron-down icon-toggle"></i>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <div class="cmd-card">
-                            <div class="cmd-header">
-                                <span class="cmd-name">/start</span>
-                            </div>
-                            <p class="cmd-desc">بدء جلسة المذاكرة وحساب الوقت بشكل دقيق.</p>
-                            <div class="cmd-usage">
-                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
-                                <span class="cmd-code">/start</span>
-                            </div>
-                        </div>
-                        <div class="cmd-card">
-                            <div class="cmd-header">
-                                <span class="cmd-name">/stop</span>
-                            </div>
-                            <p class="cmd-desc">إيقاف الجلسة الحالية وحفظ الدقائق في رصيدك.</p>
-                            <div class="cmd-usage">
-                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
-                                <span class="cmd-code">/stop</span>
-                            </div>
-                        </div>
-                        <div class="cmd-card">
-                            <div class="cmd-header">
-                                <span class="cmd-name">/coins</span>
-                            </div>
-                            <p class="cmd-desc">استعراض رصيدك المالي وبطاقة البروفايل الخاص بك.</p>
-                            <div class="cmd-usage">
-                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
-                                <span class="cmd-code">/coins [@user]</span>
-                            </div>
-                        </div>
-                        <div class="cmd-card">
-                            <div class="cmd-header">
-                                <span class="cmd-name">/top</span>
-                            </div>
-                            <p class="cmd-desc">عرض لوحة الصدارة لأكثر الطلاب مذاكرة في السيرفر.</p>
-                            <div class="cmd-usage">
-                                <div class="cmd-usage-title">طريقة الاستخدام:</div>
-                                <span class="cmd-code">/top</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="commands-layout">
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-target="tab-students">
+                    <i class="fas fa-user-graduate"></i> نظام الطلاب
+                </button>
+                <button class="tab-btn" data-target="tab-admin">
+                    <i class="fas fa-shield-halved"></i> إدارة السيرفر
+                </button>
+                <button class="tab-btn" data-target="tab-logs">
+                    <i class="fas fa-network-wired"></i> سجلات المراقبة
+                </button>
+                <button class="tab-btn" data-target="tab-dev">
+                    <i class="fas fa-terminal"></i> أوامر النظام
+                </button>
             </div>
 
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h3><i class="fas fa-shield-alt"></i> أوامر الإدارة والتحكم</h3>
-                    <i class="fas fa-chevron-down icon-toggle"></i>
+            <div class="tabs-content-area">
+                
+                <div class="tab-pane active" id="tab-students">
+                    <div class="cmd-item">
+                        <div class="cmd-name">/start</div>
+                        <div class="cmd-desc">يبدأ تشغيل العداد الذكي لحساب وقت جلسة المذاكرة الخاصة بك.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/start</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/stop</div>
+                        <div class="cmd-desc">ينهي الجلسة الحالية ويقوم بترحيل الدقائق لرصيدك الإجمالي.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/stop</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/coins</div>
+                        <div class="cmd-desc">يعرض بطاقة البروفايل العصرية مع رصيدك من العملات.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/coins [user]</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/top</div>
+                        <div class="cmd-desc">يستعرض لوحة الصدارة لأكثر 10 طلاب نشاطاً في السيرفر.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/top</code></div>
+                    </div>
                 </div>
- 
+
+                <div class="tab-pane" id="tab-admin">
+                    <div class="cmd-item">
+                        <div class="cmd-name">/addcoin</div>
+                        <div class="cmd-desc">ضخ عملات رقمية في حساب طالب محدد كمكافأة للتميز.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/addcoin @user 100</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/take</div>
+                        <div class="cmd-desc">سحب رصيد من طالب معين كإجراء إداري أو عقابي.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/take @user 50</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/clearbgs</div>
+                        <div class="cmd-desc">إعادة ضبط خلفية بطاقة الطالب إلى التصميم الافتراضي للسيرفر.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/clearbgs @user</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/reset_time</div>
+                        <div class="cmd-desc">تصفير وقت المذاكرة المسجل لعضو محدد لبدء منافسة جديدة.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/reset_time @user</code></div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab-logs">
+                    <div class="cmd-item">
+                        <div class="cmd-name">/setlog</div>
+                        <div class="cmd-desc">توجيه إشعارات (بدء/انتهاء) المذاكرة إلى قناة مخصصة.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/setlog #channel</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/setloggive</div>
+                        <div class="cmd-desc">إنشاء سجل مراقبة لعمليات تحويل الكوينز بين الأعضاء.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/setloggive #channel</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/setlogbgshop</div>
+                        <div class="cmd-desc">تتبع جميع حركات الشراء التي تتم داخل متجر الخلفيات.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/setlogbgshop #channel</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/disable_logs</div>
+                        <div class="cmd-desc">إلغاء تفعيل جميع أنظمة المراقبة والسجلات في السيرفر بضغطة واحدة.</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/disable_logs</code></div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab-dev">
+                    <div class="cmd-item">
+                        <div class="cmd-name">/system</div>
+                        <div class="cmd-desc">عرض إحصائيات حية لأداء السيرفر (Ping, RAM Usage, Uptime).</div>
+                        <div class="cmd-terminal"><span class="label">Usage</span><code>/system</code></div>
+                    </div>
+                    <div class="cmd-item">
+                        <div class="cmd-name">/maintenance</div>
+                        <div class="cmd-desc">إدخال البوت في وضع الصيانة لمنع استجابة الأوامر مؤقتاً.</div>
+      
