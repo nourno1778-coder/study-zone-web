@@ -9,18 +9,18 @@
     
     <style>
         :root {
-            --bg-base: #030305;
-            --bg-surface: #0a0a12;
-            --bg-card: rgba(20, 20, 30, 0.6);
+            --bg-base: #050508;
+            --bg-surface: #12121a;
+            --bg-card: rgba(25, 25, 35, 0.8);
             --primary: #5865F2;
-            --primary-glow: rgba(88, 101, 242, 0.4);
+            --primary-glow: rgba(88, 101, 242, 0.5);
             --accent: #F91880;
             --text-main: #ffffff;
-            --text-muted: #8b949e;
-            --border: rgba(255, 255, 255, 0.05);
-            --radius-lg: 24px;
-            --radius-md: 16px;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --text-muted: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.1);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition: all 0.3s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
@@ -29,264 +29,191 @@
             background-color: var(--bg-base);
             color: var(--text-main);
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(88, 101, 242, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(249, 24, 128, 0.05), transparent 25%);
-            background-attachment: fixed;
+            background-image: radial-gradient(circle at top right, rgba(88, 101, 242, 0.1), transparent 40%);
         }
 
-        /* تأثيرات ظهور العناصر (JS Animation Classes) */
-        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* Floating Navbar */
+        /* Navbar */
         nav {
             position: fixed;
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 1000px;
-            background: rgba(10, 10, 18, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            width: 95%;
+            max-width: 1100px;
+            background: rgba(18, 18, 26, 0.85);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--border);
-            border-radius: 100px;
+            border-radius: 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px 10px 10px;
+            padding: 10px 20px;
             z-index: 1000;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; }
-        .logo img { width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 0 15px var(--primary-glow); }
-        .nav-links { display: flex; gap: 25px; list-style: none; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 700; transition: var(--transition); font-size: 1rem; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; color: #fff; text-decoration: none; }
+        .logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--primary); }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: var(--transition); }
         .nav-links a:hover { color: #fff; }
         
         .btn-add {
             background: var(--primary);
             color: #fff;
-            padding: 12px 24px;
-            border-radius: 100px;
+            padding: 10px 25px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
             transition: var(--transition);
-            box-shadow: 0 0 20px var(--primary-glow);
         }
-        .btn-add:hover { background: #4752c4; transform: scale(1.05); }
+        .btn-add:hover { background: #4752c4; box-shadow: 0 0 15px var(--primary-glow); }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            padding: 180px 20px 80px;
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 150px 20px 50px;
-            position: relative;
         }
 
-        .bot-avatar {
-            width: 140px;
-            height: 140px;
-            border-radius: 35px;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border: 1px solid rgba(88, 101, 242, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--primary);
-            margin-bottom: 30px;
-            box-shadow: 0 0 50px rgba(88, 101, 242, 0.2);
-            animation: float 5s ease-in-out infinite;
+        .bot-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 30px;
+            margin-bottom: 25px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 30px var(--primary-glow);
+            object-fit: cover;
         }
 
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .hero h1 { font-size: 4rem; font-weight: 900; margin-bottom: 20px; color: #fff; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.3rem; color: var(--text-muted); max-width: 700px; line-height: 1.6; margin-bottom: 40px; }
 
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 30%, var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero h1 span { color: var(--primary); -webkit-text-fill-color: var(--primary); }
-        .hero p { font-size: 1.3rem; color: var(--text-muted); max-width: 600px; font-weight: 500; margin-bottom: 50px; }
-
-        /* Stats Glass Cards */
-        .stats-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-        .stat-card {
+        /* Stats */
+        .stats-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .stat-box {
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            padding: 25px 40px;
+            padding: 25px 45px;
             border-radius: var(--radius-lg);
             text-align: center;
-            min-width: 180px;
-            transition: var(--transition);
         }
-        .stat-card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(88, 101, 242, 0.05); }
-        .stat-card h3 { font-size: 2.5rem; font-weight: 900; color: #fff; }
-        .stat-card p { color: var(--primary); font-weight: 700; font-size: 1rem; }
+        .stat-box h3 { font-size: 2.5rem; color: #fff; margin-bottom: 5px; }
+        .stat-box p { color: var(--primary); font-weight: bold; font-size: 1.1rem; }
 
-        /* Modern Commands Section */
-        .commands-section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { font-size: 3rem; font-weight: 900; color: #fff; }
-        .section-header p { color: var(--text-muted); font-size: 1.2rem; margin-top: 10px; }
+        /* Commands Section */
+        .commands-section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 3rem; margin-bottom: 50px; color: #fff; }
 
-        .commands-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 30px;
-        }
-
-        .tabs-nav { display: flex; flex-direction: column; gap: 10px; }
-        .tab-btn {
-            background: var(--bg-card);
+        .commands-layout { display: grid; grid-template-columns: 280px 1fr; gap: 30px; }
+        
+        .tabs-menu { display: flex; flex-direction: column; gap: 10px; }
+        .tab-button {
+            background: var(--bg-surface);
             border: 1px solid var(--border);
-            padding: 20px;
+            padding: 18px 20px;
             border-radius: var(--radius-md);
             color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: bold;
             text-align: right;
             cursor: pointer;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
-        .tab-btn i { font-size: 1.4rem; color: #444; transition: var(--transition); }
-        .tab-btn:hover { background: rgba(255,255,255,0.05); }
-        .tab-btn.active {
-            background: rgba(88, 101, 242, 0.1);
-            border-color: var(--primary);
+        .tab-button:hover { background: rgba(255,255,255,0.05); }
+        .tab-button.active {
+            background: var(--primary);
             color: #fff;
-            box-shadow: inset 4px 0 0 var(--primary);
-        }
-        .tab-btn.active i { color: var(--primary); }
-
-        .tabs-content-area {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
+            border-color: var(--primary);
         }
 
-        .tab-pane { display: none; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; animation: fadeIn 0.5s ease forwards; }
-        .tab-pane.active { display: grid; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Command Cards */
-        .cmd-item {
+        .tabs-content {
             background: var(--bg-surface);
             border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 25px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
+            border-radius: var(--radius-lg);
+            padding: 30px;
         }
-        .cmd-item:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .cmd-item::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, var(--primary), transparent);
-            opacity: 0; transition: var(--transition);
-        }
-        .cmd-item:hover::before { opacity: 1; }
+        
+        .tab-panel { display: none; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .tab-panel.active { display: grid; }
 
-        .cmd-name {
+        .cmd-card {
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
+        .cmd-title {
             display: inline-block;
-            background: rgba(88, 101, 242, 0.15);
+            background: rgba(88, 101, 242, 0.2);
             color: #a6b1fa;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
             font-size: 1.1rem;
             font-weight: bold;
-            margin-bottom: 15px;
-            border: 1px solid rgba(88, 101, 242, 0.3);
+            margin-bottom: 10px;
         }
-        .cmd-desc { color: #fff; font-size: 1rem; font-weight: 500; margin-bottom: 20px; line-height: 1.6; }
-        
-        .cmd-terminal {
+        .cmd-desc { color: var(--text-muted); margin-bottom: 15px; font-size: 1rem; line-height: 1.5; }
+        .cmd-code {
             background: #000;
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid #222;
-        }
-        .cmd-terminal span.label { display: block; color: #555; font-size: 0.8rem; margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
-        .cmd-terminal code { color: #a6e22e; font-family: monospace; font-size: 0.95rem; direction: ltr; display: block; }
-
-        /* Developer Bento Box */
-        .bento-section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: auto auto;
-            gap: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            color: #a6e22e;
+            font-family: monospace;
+            direction: ltr;
+            display: block;
+            text-align: left;
         }
 
-        .bento-box {
+        /* Developer Section */
+        .dev-section { padding: 80px 5%; max-width: 1000px; margin: 0 auto; }
+        .dev-box {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
+            padding: 50px;
+            text-align: center;
         }
-        .bento-box:hover { border-color: rgba(255,255,255,0.1); transform: translateY(-3px); }
-
-        /* Box 1: Main Info */
-        .box-main { grid-column: span 2; display: flex; flex-direction: column; justify-content: center; }
-        .dev-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(249, 24, 128, 0.1); color: var(--accent); padding: 5px 15px; border-radius: 100px; font-weight: bold; font-size: 0.9rem; margin-bottom: 20px; width: fit-content; border: 1px solid rgba(249, 24, 128, 0.2); }
-        .box-main h3 { font-size: 3rem; font-weight: 900; color: #fff; margin-bottom: 15px; }
-        .box-main p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; max-width: 90%; }
-
-        /* Box 2: Avatar Icon */
-        .box-avatar { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(88,101,242,0.1), rgba(0,0,0,0)); }
-        .cyber-icon { font-size: 6rem; color: var(--primary); filter: drop-shadow(0 0 20px var(--primary-glow)); }
-
-        /* Box 3: Socials */
-        .box-social { grid-column: span 3; display: flex; justify-content: center; gap: 20px; padding: 30px !important; }
-        .social-circle {
-            width: 60px; height: 60px; border-radius: 50%; background: var(--bg-surface);
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-            color: #fff; text-decoration: none; border: 1px solid var(--border);
+        .dev-icon {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .dev-box h2 { font-size: 2.5rem; color: #fff; margin-bottom: 10px; }
+        .dev-id {
+            display: inline-block;
+            background: rgba(249, 24, 128, 0.2);
+            color: var(--accent);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .dev-box p { color: var(--text-muted); font-size: 1.2rem; line-height: 1.8; margin-bottom: 30px; }
+        
+        .socials { display: flex; justify-content: center; gap: 15px; }
+        .social-link {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--bg-surface);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; text-decoration: none;
+            border: 1px solid var(--border);
             transition: var(--transition);
         }
-        .social-circle:hover { background: var(--primary); transform: scale(1.1); box-shadow: 0 10px 20px var(--primary-glow); border-color: var(--primary); }
+        .social-link:hover { background: var(--primary); border-color: var(--primary); }
 
-        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-muted); font-weight: 500; }
-        footer span { color: var(--primary); font-weight: 800; }
+        footer { text-align: center; padding: 30px; color: var(--text-muted); border-top: 1px solid var(--border); }
 
-        /* Mobile Adjustments */
-        @media (max-width: 990px) {
+        @media (max-width: 800px) {
             .commands-layout { grid-template-columns: 1fr; }
-            .tabs-nav { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
-            .tab-btn { min-width: 200px; justify-content: center; }
-            .bento-grid { grid-template-columns: 1fr; }
-            .box-main, .box-social, .box-avatar { grid-column: span 1; }
-            .box-avatar { padding: 60px 0; }
-            .hero h1 { font-size: 3rem; }
+            .tabs-menu { flex-direction: row; overflow-x: auto; }
+            .tab-button { min-width: 150px; text-align: center; }
             .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -294,142 +221,177 @@
 
     <nav>
         <a href="#" class="logo">
-            <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png" alt="Bot Logo">
+            <img src="https://ui-avatars.com/api/?name=SZ&background=5865F2&color=fff&size=128" alt="Bot Logo">
             Study Zone
         </a>
         <ul class="nav-links">
             <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#commands">قاعدة الأوامر</a></li>
-            <li><a href="#developer">الأنظمة والمطور</a></li>
+            <li><a href="#commands">الأوامر</a></li>
+            <li><a href="#developer">المطور</a></li>
         </ul>
-        <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-add">
-            <i class="fab fa-discord"></i> أضف البوت
-        </a>
+        <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-add">إضافة البوت</a>
     </nav>
 
     <section class="hero" id="home">
-        <div class="bot-avatar reveal">
-            <i class="fas fa-brain"></i>
-        </div>
-        <h1 class="reveal">ارتقِ بمستوى <span>سيرفرك</span> الدراسي</h1>
-        <p class="reveal">تجربة متكاملة مصممة بأحدث التقنيات لتحويل وقت المذاكرة إلى رحلة تنافسية ممتعة داخل ديسكورد، مع نظام اقتصاد وجوائز رقمية.</p>
+        <img src="https://ui-avatars.com/api/?name=SZ&background=5865F2&color=fff&size=256" alt="Study Zone Bot" class="bot-image">
         
-        <div class="stats-grid reveal">
-            <div class="stat-card">
+        <h1>رفيقك الأول في <span>رحلة المذاكرة</span></h1>
+        <p>نظام احترافي متكامل داخل ديسكورد، يراقب وقت دراستك، يحفزك بالتنافس مع أصدقائك، ويكافئك بالعملات الرقمية.</p>
+        
+        <div class="stats-container">
+            <div class="stat-box">
                 <h3>+75</h3>
-                <p>سيرفر نشط</p>
+                <p>سيرفر مفعل</p>
             </div>
-            <div class="stat-card">
-                <h3>+2.5K</h3>
-                <p>مستخدم مسجل</p>
-            </div>
-            <div class="stat-card">
-                <h3>+500</h3>
-                <p>طالب يومياً</p>
+            <div class="stat-box">
+                <h3>+2500</h3>
+                <p>طالب مسجل</p>
             </div>
         </div>
     </section>
 
-    <section class="commands-section reveal" id="commands">
-        <div class="section-header">
-            <h2>مركز التحكم والأوامر</h2>
-            <p>تصفح إمكانيات البوت من خلال الواجهة التفاعلية</p>
-        </div>
+    <section class="commands-section" id="commands">
+        <h2 class="section-title">مركز الأوامر</h2>
 
         <div class="commands-layout">
-            <div class="tabs-nav">
-                <button class="tab-btn active" data-target="tab-students">
-                    <i class="fas fa-user-graduate"></i> نظام الطلاب
-                </button>
-                <button class="tab-btn" data-target="tab-admin">
-                    <i class="fas fa-shield-halved"></i> إدارة السيرفر
-                </button>
-                <button class="tab-btn" data-target="tab-logs">
-                    <i class="fas fa-network-wired"></i> سجلات المراقبة
-                </button>
-                <button class="tab-btn" data-target="tab-dev">
-                    <i class="fas fa-terminal"></i> أوامر النظام
-                </button>
+            <div class="tabs-menu">
+                <button class="tab-button active" onclick="openTab('students')">الطلاب</button>
+                <button class="tab-button" onclick="openTab('admin')">الإدارة</button>
+                <button class="tab-button" onclick="openTab('logs')">السجلات</button>
+                <button class="tab-button" onclick="openTab('dev')">النظام</button>
             </div>
 
-            <div class="tabs-content-area">
-                
-                <div class="tab-pane active" id="tab-students">
-                    <div class="cmd-item">
-                        <div class="cmd-name">/start</div>
-                        <div class="cmd-desc">يبدأ تشغيل العداد الذكي لحساب وقت جلسة المذاكرة الخاصة بك.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/start</code></div>
+            <div class="tabs-content">
+                <div id="students" class="tab-panel active">
+                    <div class="cmd-card">
+                        <div class="cmd-title">/start</div>
+                        <div class="cmd-desc">بدء جلسة المذاكرة وحساب الوقت بشكل دقيق.</div>
+                        <div class="cmd-code">/start</div>
                     </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/stop</div>
-                        <div class="cmd-desc">ينهي الجلسة الحالية ويقوم بترحيل الدقائق لرصيدك الإجمالي.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/stop</code></div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/stop</div>
+                        <div class="cmd-desc">إيقاف الجلسة الحالية وحفظ الدقائق في رصيدك.</div>
+                        <div class="cmd-code">/stop</div>
                     </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/coins</div>
-                        <div class="cmd-desc">يعرض بطاقة البروفايل العصرية مع رصيدك من العملات.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/coins [user]</code></div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/coins</div>
+                        <div class="cmd-desc">استعراض رصيدك المالي وبطاقة البروفايل الخاص بك.</div>
+                        <div class="cmd-code">/coins</div>
                     </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/top</div>
-                        <div class="cmd-desc">يستعرض لوحة الصدارة لأكثر 10 طلاب نشاطاً في السيرفر.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/top</code></div>
-                    </div>
-                </div>
-
-                <div class="tab-pane" id="tab-admin">
-                    <div class="cmd-item">
-                        <div class="cmd-name">/addcoin</div>
-                        <div class="cmd-desc">ضخ عملات رقمية في حساب طالب محدد كمكافأة للتميز.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/addcoin @user 100</code></div>
-                    </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/take</div>
-                        <div class="cmd-desc">سحب رصيد من طالب معين كإجراء إداري أو عقابي.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/take @user 50</code></div>
-                    </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/clearbgs</div>
-                        <div class="cmd-desc">إعادة ضبط خلفية بطاقة الطالب إلى التصميم الافتراضي للسيرفر.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/clearbgs @user</code></div>
-                    </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/reset_time</div>
-                        <div class="cmd-desc">تصفير وقت المذاكرة المسجل لعضو محدد لبدء منافسة جديدة.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/reset_time @user</code></div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/top</div>
+                        <div class="cmd-desc">عرض لوحة الصدارة لأكثر الطلاب مذاكرة.</div>
+                        <div class="cmd-code">/top</div>
                     </div>
                 </div>
 
-                <div class="tab-pane" id="tab-logs">
-                    <div class="cmd-item">
-                        <div class="cmd-name">/setlog</div>
-                        <div class="cmd-desc">توجيه إشعارات (بدء/انتهاء) المذاكرة إلى قناة مخصصة.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/setlog #channel</code></div>
+                <div id="admin" class="tab-panel">
+                    <div class="cmd-card">
+                        <div class="cmd-title">/addcoin</div>
+                        <div class="cmd-desc">إضافة عملات رقمية كجائزة لطالب محدد.</div>
+                        <div class="cmd-code">/addcoin @user 100</div>
                     </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/setloggive</div>
-                        <div class="cmd-desc">إنشاء سجل مراقبة لعمليات تحويل الكوينز بين الأعضاء.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/setloggive #channel</code></div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/take</div>
+                        <div class="cmd-desc">خصم عملات من رصيد الطالب كإجراء إداري.</div>
+                        <div class="cmd-code">/take @user 50</div>
                     </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/setlogbgshop</div>
-                        <div class="cmd-desc">تتبع جميع حركات الشراء التي تتم داخل متجر الخلفيات.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/setlogbgshop #channel</code></div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/clearbgs</div>
+                        <div class="cmd-desc">مسح الخلفية المخصصة للطالب وإعادتها للافتراضية.</div>
+                        <div class="cmd-code">/clearbgs @user</div>
                     </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/disable_logs</div>
-                        <div class="cmd-desc">إلغاء تفعيل جميع أنظمة المراقبة والسجلات في السيرفر بضغطة واحدة.</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/disable_logs</code></div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/reset_time</div>
+                        <div class="cmd-desc">تصفير وقت المذاكرة الخاص بعضو معين.</div>
+                        <div class="cmd-code">/reset_time @user</div>
                     </div>
                 </div>
 
-                <div class="tab-pane" id="tab-dev">
-                    <div class="cmd-item">
-                        <div class="cmd-name">/system</div>
-                        <div class="cmd-desc">عرض إحصائيات حية لأداء السيرفر (Ping, RAM Usage, Uptime).</div>
-                        <div class="cmd-terminal"><span class="label">Usage</span><code>/system</code></div>
+                <div id="logs" class="tab-panel">
+                    <div class="cmd-card">
+                        <div class="cmd-title">/setlog</div>
+                        <div class="cmd-desc">تحديد روم لإرسال إشعارات بدء وانتهاء المذاكرة.</div>
+                        <div class="cmd-code">/setlog #channel</div>
                     </div>
-                    <div class="cmd-item">
-                        <div class="cmd-name">/maintenance</div>
-                        <div class="cmd-desc">إدخال البوت في وضع الصيانة لمنع استجابة الأوامر مؤقتاً.</div>
-      
+                    <div class="cmd-card">
+                        <div class="cmd-title">/setloggive</div>
+                        <div class="cmd-desc">تحديد روم لتسجيل عمليات تحويل الأموال.</div>
+                        <div class="cmd-code">/setloggive #channel</div>
+                    </div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/setlogbgshop</div>
+                        <div class="cmd-desc">تتبع عمليات شراء الخلفيات من المتجر.</div>
+                        <div class="cmd-code">/setlogbgshop #channel</div>
+                    </div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/disable_logs</div>
+                        <div class="cmd-desc">إيقاف جميع أنظمة السجلات في السيرفر دفعة واحدة.</div>
+                        <div class="cmd-code">/disable_logs</div>
+                    </div>
+                </div>
+
+                <div id="dev" class="tab-panel">
+                    <div class="cmd-card">
+                        <div class="cmd-title">/system</div>
+                        <div class="cmd-desc">مراقبة أداء الخادم (Ping, RAM).</div>
+                        <div class="cmd-code">/system</div>
+                    </div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/maintenance</div>
+                        <div class="cmd-desc">تفعيل أو إيقاف وضع الصيانة للبوت.</div>
+                        <div class="cmd-code">/maintenance ON</div>
+                    </div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/broadcast</div>
+                        <div class="cmd-desc">نشر رسالة إدارية لجميع السيرفرات المشتركة.</div>
+                        <div class="cmd-code">/broadcast "msg"</div>
+                    </div>
+                    <div class="cmd-card">
+                        <div class="cmd-title">/blacklist</div>
+                        <div class="cmd-desc">حظر شخص أو سيرفر من استخدام خدمات البوت.</div>
+                        <div class="cmd-code">/blacklist ID</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="dev-section" id="developer">
+        <div class="dev-box">
+            <i class="fas fa-microchip dev-icon"></i>
+            <div class="dev-id">Dev ID: c.u7</div>
+            <h2>Yasser</h2>
+            <p>مؤسس ومطور مشروع Study Zone. تم بناء هذا النظام لتوفير أفضل تجربة دراسية وتنافسية داخل منصة ديسكورد بأعلى معايير البرمجة والتصميم.</p>
+            
+            <div class="socials">
+                <a href="https://discord.com/users/1082902543597834240" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+                <a href="https://www.instagram.com/c_7eh" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Study Zone &copy; 2024 - Developed by Yasser</p>
+    </footer>
+
+    <script>
+        // سكريبت بسيط جداً ومضمون لتبديل الأقسام بدون أي تعقيد
+        function openTab(tabId) {
+            // إخفاء كل المحتوى
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            // إزالة التفعيل من كل الأزرار
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // تفعيل القسم والزر المطلوب
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
