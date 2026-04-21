@@ -196,7 +196,7 @@
             font-size: 1.1rem;
         }
 
-        /* Developer Section */
+        /* Developer Section Styles */
         .dev-section { padding: 80px 5%; max-width: 900px; margin: 0 auto; }
         .dev-box {
             background: var(--bg-card);
@@ -205,7 +205,23 @@
             padding: 50px;
             text-align: center;
         }
-        .dev-icon { font-size: 5rem; color: var(--primary); margin-bottom: 20px; }
+        
+        .dev-profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            box-shadow: 0 0 25px var(--primary-glow);
+            object-fit: cover;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .dev-profile-img:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
         .dev-box h2 { font-size: 2.5rem; color: #fff; margin-bottom: 10px; }
         .dev-id {
             display: inline-block;
@@ -243,7 +259,7 @@
 
     <nav>
         <a href="#" class="logo">
-            <img src="https://cdn.discordapp.com/attachments/1019660012185993369/1496209219173613608/f124bf9a02c96bf350c17f9887072e72.png?ex=69e90cec&is=69e7bb6c&hm=68a7918e54218a9460a152756b69640fa1b4660f079a9b8ccecaa19d92904073&" alt="Bot Logo">
+            <img src="https://i.postimg.cc/vmXC4NPZ/f124bf9a02c96bf350c17f9887072e72.png" alt="Bot Logo">
             Study Zone
         </a>
         <ul class="nav-links">
@@ -255,7 +271,7 @@
     </nav>
 
     <section class="hero" id="home">
-        <img src="https://cdn.discordapp.com/attachments/1019660012185993369/1496209219173613608/f124bf9a02c96bf350c17f9887072e72.png?ex=69e90cec&is=69e7bb6c&hm=68a7918e54218a9460a152756b69640fa1b4660f079a9b8ccecaa19d92904073&" alt="Study Zone Bot" class="bot-image">
+        <img src="https://i.postimg.cc/vmXC4NPZ/f124bf9a02c96bf350c17f9887072e72.png" alt="Study Zone Bot" class="bot-image">
         
         <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-add">إضافة البوت للسيرفر</a>
         
@@ -267,7 +283,7 @@
         </div>
 
         <div class="server-showcase">
-            <img src="https://cdn.discordapp.com/attachments/1019660012185993369/1496209214396432578/IMG_20260421_200021.jpg?ex=69e90cea&is=69e7bb6a&hm=4cab8433853669a0e340de88c1d9b8d74b0c7890bfd2ae4d38154ebaa9f404db&" alt="Study With Hisuki Server" class="server-image">
+            <img src="https://i.postimg.cc/sXjy8WLv/IMG-20260421-200021.jpg" alt="Study With Hisuki Server" class="server-image">
             <a href="https://discord.gg/hisuki" target="_blank" class="btn-join">انضم إلى السيرفر الآن وابدأ المذاكرة</a>
         </div>
         
@@ -312,7 +328,8 @@
 
     <section class="dev-section" id="developer">
         <div class="dev-box">
-            <i class="fas fa-microchip dev-icon"></i>
+            <img src="https://i.postimg.cc/hXMshNgH/IMG-20260421-202333.jpg" alt="Yasser" class="dev-profile-img">
+            
             <div class="dev-id">Dev ID: c.u7</div>
             <h2>Yasser</h2>
             <p>مطور مشروع Study Zone المخصص لسيرفر Study With Hisuki. تم بناء هذا النظام لتوفير أفضل تجربة دراسية وتنافسية داخل منصة ديسكورد بأعلى معايير البرمجة.</p>
