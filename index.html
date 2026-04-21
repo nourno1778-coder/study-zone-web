@@ -3,521 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Zone Bot | الموقع الرسمي</title>
+    <title>Study Zone | المنصة الرسمية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* المتغيرات والألوان الأساسية */
         :root {
-            --bg-color: #0b0f19;
-            --nav-bg: rgba(11, 15, 25, 0.85);
-            --card-bg: #151a2a;
-            --card-hover: #1c2238;
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --primary: #5865F2; /* لون ديسكورد */
-            --primary-hover: #4752C4;
-            --gradient: linear-gradient(135deg, #5865F2, #8b5cf6);
-            --border: rgba(255, 255, 255, 0.08);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary: #5865F2;
+            --accent: #00d2ff;
+            --bg: #05070a;
+            --card-bg: #0d1117;
+            --text-color: #e6edf3;
+            --text-dim: #8b949e;
+            --gradient: linear-gradient(135deg, #5865F2 0%, #00d2ff 100%);
+            --transition: all 0.3s ease;
         }
 
-        /* الإعدادات العامة */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.7;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+        body { background-color: var(--bg); color: var(--text-color); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* شريط التنقل العلوي (Navbar) */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--nav-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* Navbar */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 8%; background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(15px); display: flex; justify-content: space-between; align-items: center; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; text-decoration: none; color: #fff; }
+        .logo img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--primary); }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .btn-add { background: var(--gradient); padding: 10px 25px; border-radius: 8px; color: #fff !important; font-weight: bold; box-shadow: 0 5px 15px rgba(88,101,242,0.3); }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #fff;
-            text-decoration: none;
-        }
+        /* Hero Section */
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; background: radial-gradient(circle at center, rgba(88,101,242,0.15) 0%, transparent 70%); }
+        .hero img.bot-img { width: 180px; height: 180px; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 0 50px rgba(88,101,242,0.4); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.3rem; max-width: 700px; color: var(--text-dim); margin-bottom: 40px; }
 
-        .nav-logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
+        /* Stats Section */
+        .stats-wrapper { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .stat-card { background: var(--card-bg); padding: 25px 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
+        .stat-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .stat-card h2 { font-size: 2.5rem; color: #fff; }
+        .stat-card p { color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
+        /* Commands Section */
+        .commands-section { padding: 100px 8%; }
+        .tabs-header { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
+        .tab-btn { padding: 12px 25px; border: none; background: var(--card-bg); color: #fff; cursor: pointer; border-radius: 10px; font-weight: bold; transition: var(--transition); border: 1px solid rgba(255,255,255,0.1); }
+        .tab-btn.active { background: var(--primary); box-shadow: 0 5px 15px rgba(88,101,242,0.4); }
+        .tab-content { display: none; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: grid; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .cmd-card { background: var(--card-bg); padding: 25px; border-radius: 15px; border-right: 4px solid var(--primary); }
+        .cmd-card h4 { font-family: monospace; font-size: 1.2rem; color: #fff; margin-bottom: 10px; background: rgba(255,255,255,0.05); display: inline-block; padding: 4px 10px; border-radius: 5px; }
+        .cmd-card p { color: var(--text-dim); font-size: 0.95rem; }
 
-        .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
+        /* Developer Section */
+        .dev-section { padding: 100px 8%; background: rgba(255,255,255,0.02); }
+        .dev-container { max-width: 1000px; margin: 0 auto; background: var(--card-bg); border-radius: 30px; display: flex; align-items: center; gap: 50px; padding: 50px; border: 1px solid rgba(255,255,255,0.05); }
+        .dev-img { width: 250px; height: 250px; border-radius: 20px; object-fit: cover; border: 3px solid var(--primary); }
+        .dev-info h3 { font-size: 2.5rem; margin-bottom: 10px; }
+        .dev-id { color: var(--primary); font-family: monospace; margin-bottom: 20px; display: block; font-size: 1.2rem; }
+        .social-box { display: flex; gap: 15px; margin-top: 25px; }
+        .social-link { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: #1a1f26; color: #fff; text-decoration: none; border-radius: 12px; font-size: 1.5rem; transition: var(--transition); }
+        .social-link:hover { background: var(--primary); transform: scale(1.1); }
+        .social-link.insta:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-dim); }
 
-        .nav-cta {
-            background: var(--gradient);
-            padding: 8px 20px;
-            border-radius: 8px;
-            color: #fff !important;
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
-        }
-
-        /* القسم الرئيسي (Hero) */
-        header {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 20px 50px;
-            position: relative;
-            background: radial-gradient(circle at center, rgba(88,101,242,0.1) 0%, transparent 60%);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            z-index: 2;
-        }
-
-        .bot-avatar {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            box-shadow: 0 0 40px rgba(88, 101, 242, 0.5);
-            margin-bottom: 30px;
-            animation: float 6s ease-in-out infinite;
-            object-fit: cover;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .description {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-        }
-
-        /* الإحصائيات */
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .stat-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 20px 40px;
-            border-radius: 15px;
-            min-width: 200px;
-            transition: var(--transition);
-        }
-
-        .stat-box:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .stat-num {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #fff;
-        }
-
-        .stat-label {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* قسم الأوامر (التفاعلي) */
-        section {
-            padding: 100px 5%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: #fff;
-        }
-
-        .commands-interface {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .tabs {
-            display: flex;
-            background: rgba(0,0,0,0.2);
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 20px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-
-        .tab-btn:hover {
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-            background: rgba(88,101,242,0.1);
-        }
-
-        .tab-content {
-            display: none;
-            padding: 40px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .cmd-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .cmd-card {
-            background: rgba(0,0,0,0.2);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .cmd-card:hover {
-            border-color: var(--primary);
-            background: rgba(88,101,242,0.05);
-        }
-
-        .cmd-name {
-            display: inline-block;
-            background: #202225;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            border-right: 3px solid var(--primary);
-        }
-
-        .cmd-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* قسم المطور */
-        #developer .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            padding: 50px;
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .dev-image-wrapper {
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .dev-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 20px;
-            object-fit: cover;
-            border: 2px solid var(--primary);
-            box-shadow: 10px 10px 0px rgba(88, 101, 242, 0.2);
-        }
-
-        .dev-info h3 {
-            font-size: 2.2rem;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-
-        .dev-tag {
-            color: var(--primary);
-            font-family: monospace;
-            font-size: 1.1rem;
-            background: rgba(88,101,242,0.1);
-            padding: 4px 10px;
-            border-radius: 5px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .dev-bio {
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 25px;
-            font-size: 1.05rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 1.3rem;
-            transition: var(--transition);
-        }
-
-        .social-btn:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .social-btn.insta:hover {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: #070a11;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-        }
-
-        /* استجابة الشاشات (Responsive) */
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* يمكن إضافة قائمة جانبية للهاتف لاحقاً */
-            #developer .container { flex-direction: column; text-align: center; }
-            .dev-image { width: 150px; height: 150px; box-shadow: 0 0 20px rgba(88,101,242,0.3); border-radius: 50%; }
-            .social-links { justify-content: center; }
-            h1 { font-size: 2.5rem; }
-            .tabs { flex-direction: column; }
-            .tab-btn { border-bottom: 1px solid var(--border); }
-            .tab-btn.active { border-right: 3px solid var(--primary); border-bottom: 1px solid var(--border); }
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .dev-container { flex-direction: column; text-align: center; padding: 30px; }
+            .dev-img { width: 180px; height: 180px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="nav-logo">
-            <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png?ex=69e904e4&is=69e7b364&hm=3c84a5bb10bc4b35909e0783166ac3acfd7991bc057bbfb487cf1cefb19842a0&" alt="Logo">
+        <a href="#" class="logo">
+            <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png" alt="Bot Logo">
             Study Zone
         </a>
         <ul class="nav-links">
             <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#commands">نظام الأوامر</a></li>
-            <li><a href="#developer">معلومات المطور</a></li>
-            <li><a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="nav-cta">إضافة البوت</a></li>
+            <li><a href="#commands">الأوامر</a></li>
+            <li><a href="#developer">المطور</a></li>
         </ul>
+        <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" target="_blank" class="btn-add">إضافة البوت</a>
     </nav>
 
-    <header id="home">
-        <div class="hero-content">
-            <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png?ex=69e904e4&is=69e7b364&hm=3c84a5bb10bc4b35909e0783166ac3acfd7991bc057bbfb487cf1cefb19842a0&" alt="Study Zone Bot Avatar" class="bot-avatar">
-            <h1>منصة المذاكرة المتكاملة</h1>
-            <p class="description">حول سيرفر الديسكورد الخاص بك إلى بيئة دراسية تفاعلية. نظام متكامل لحساب أوقات المذاكرة، منافسة بين الطلاب، واقتصاد رقمي يحفز على الاستمرارية.</p>
-            
-            <div class="stats-container">
-                <div class="stat-box">
-                    <div class="stat-num">+75</div>
-                    <div class="stat-label">سيرفر تعليمي</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-num">+2500</div>
-                    <div class="stat-label">طالب ومستخدم</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-num">+500</div>
-                    <div class="stat-label">نشط يومياً</div>
-                </div>
+    <section class="hero" id="home">
+        <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png" alt="Study Zone" class="bot-img">
+        <h1>بوت المذاكرة الأول</h1>
+        <p>نظام احترافي متكامل مصمم خصيصاً لتعزيز الإنتاجية الدراسية داخل الديسكورد، يجمع بين حساب الوقت، التنافس الشريف، والجوائز الرقمية.</p>
+        
+        <div class="stats-wrapper">
+            <div class="stat-card">
+                <h2>+75</h2>
+                <p>سيرفر يستخدم البوت</p>
             </div>
-        </div>
-    </header>
-
-    <section id="commands">
-        <h2 class="section-title">دليل استخدام النظام</h2>
-        <div class="commands-interface">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="openTab('general')"><i class="fas fa-users"></i> قسم الطلاب والمذاكرة</button>
-                <button class="tab-btn" onclick="openTab('admin')"><i class="fas fa-user-shield"></i> قسم الإدارة (المشرفين)</button>
-                <button class="tab-btn" onclick="openTab('logs')"><i class="fas fa-server"></i> قسم السجلات والتقارير</button>
-                <button class="tab-btn" onclick="openTab('dev')"><i class="fas fa-code"></i> قسم التحكم الشامل</button>
+            <div class="stat-card">
+                <h2>+2500</h2>
+                <p>مستخدم مسجل</p>
             </div>
-
-            <div id="general" class="tab-content active">
-                <div class="cmd-list">
-                    <div class="cmd-card"><div class="cmd-name">/start</div><div class="cmd-desc">بدء جلسة مذاكرة وتفعيل مؤقت حساب الوقت الخاص بك.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/stop</div><div class="cmd-desc">إيقاف الجلسة الحالية وحفظ تقدمك في قاعدة البيانات.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/coins</div><div class="cmd-desc">استعراض رصيدك وعرض كارت البروفايل الشخصي الخاص بك.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/give</div><div class="cmd-desc">تحويل أموال (كوينز) من رصيدك إلى طالب آخر.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/top</div><div class="cmd-desc">لوحة الصدارة لعرض الأوائل والمنافسة بين الأعضاء.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/help</div><div class="cmd-desc">فتح قائمة المساعدة الشاملة داخل الديسكورد.</div></div>
-                </div>
-            </div>
-
-            <div id="admin" class="tab-content">
-                <div class="cmd-list">
-                    <div class="cmd-card"><div class="cmd-name">/addcoin</div><div class="cmd-desc">إضافة كوينز كهدية أو مكافأة لطالب معين.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/take</div><div class="cmd-desc">سحب كوينز من رصيد طالب (للخصومات والعقوبات).</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/minuscoin</div><div class="cmd-desc">إنقاص كوينز (يسمح بأن يكون رصيد العضو بالسالب).</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/clearbgs</div><div class="cmd-desc">إزالة خلفية البروفايل المشترية للعضو وإرجاعها للافتراضي.</div></div>
-                </div>
-            </div>
-
-            <div id="logs" class="tab-content">
-                <div class="cmd-list">
-                    <div class="cmd-card"><div class="cmd-name">/setlog</div><div class="cmd-desc">تحديد روم لإرسال تقارير بدء وانتهاء جلسات المذاكرة.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/setloggive</div><div class="cmd-desc">تحديد روم لمراقبة عمليات تحويل الكوينز بين الأعضاء.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/setlogreset</div><div class="cmd-desc">تقارير تصفير الأموال والمحافظ.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/setlogbgshop</div><div class="cmd-desc">مراقبة عمليات الشراء لخلفيات كروت البروفايل.</div></div>
-                </div>
-            </div>
-
-            <div id="dev" class="tab-content">
-                <div class="cmd-list">
-                    <div class="cmd-card"><div class="cmd-name">/system</div><div class="cmd-desc">تقرير تقني شامل عن حالة الاستضافة والرامات.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/maintenance</div><div class="cmd-desc">تفعيل وضع الصيانة لإيقاف الخدمات مؤقتاً للتحديث.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/blacklist</div><div class="cmd-desc">حظر عضو أو سيرفر من استخدام النظام بالكامل.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/resetallstats</div><div class="cmd-desc">تصفير شامل لإحصائيات الدقائق للموسم الدراسي الجديد.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/broadcast</div><div class="cmd-desc">إرسال تعميم أو إعلان رسمي لجميع السيرفرات المتصلة.</div></div>
-                    <div class="cmd-card"><div class="cmd-name">/botinfo</div><div class="cmd-desc">معلومات دقيقة عن إصدار البوت وقاعدة البيانات.</div></div>
-                </div>
+            <div class="stat-card">
+                <h2>+500</h2>
+                <p>مستخدم يومي نشط</p>
             </div>
         </div>
     </section>
 
-    <section id="developer">
-        <h2 class="section-title">مطور المنصة</h2>
-        <div class="container">
-            <div class="dev-image-wrapper">
-                <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200604165341277/IMG_20260421_190355.jpg?ex=69e904e6&is=69e7b366&hm=68ee04b1b41b1d1bf17d42838fffc466e8e4714258e41f755ac5a99ce7dd1905&" alt="المطور" class="dev-image">
-            </div>
+    <section class="commands-section" id="commands">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">مركز الأوامر التفاعلي</h2>
+        
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="showTab('tab-std')">أوامر الطلاب</button>
+            <button class="tab-btn" onclick="showTab('tab-adm')">أوامر الإدارة</button>
+            <button class="tab-btn" onclick="showTab('tab-log')">أنظمة اللوج</button>
+            <button class="tab-btn" onclick="showTab('tab-dev')">التحكم بالمشروع</button>
+        </div>
+
+        <div id="tab-std" class="tab-content active">
+            <div class="cmd-card"><h4>/start</h4><p>بدء عداد المذاكرة الشخصي وتسجيل وقت النشاط.</p></div>
+            <div class="cmd-card"><h4>/stop</h4><p>إنهاء الجلسة وحفظ إجمالي الدقائق في قاعدة البيانات.</p></div>
+            <div class="cmd-card"><h4>/coins</h4><p>عرض محفظتك المالية وكارت البروفايل الخاص بك.</p></div>
+            <div class="cmd-card"><h4>/top</h4><p>استعراض قائمة المتصدرين (أوائل المذاكرة) في السيرفر.</p></div>
+            <div class="cmd-card"><h4>/give</h4><p>تحويل كمية من الكوينز كهدية لمستخدم آخر.</p></div>
+            <div class="cmd-card"><h4>/help</h4><p>الحصول على مساعدة فورية لجميع وظائف البوت.</p></div>
+        </div>
+
+        <div id="tab-adm" class="tab-content">
+            <div class="cmd-card"><h4>/addcoin</h4><p>منح كوينز كجائزة لمستخدم متميز.</p></div>
+            <div class="cmd-card"><h4>/take</h4><p>سحب كوينز من رصيد مستخدم معين.</p></div>
+            <div class="cmd-card"><h4>/clearbgs</h4><p>إعادة ضبط خلفية البروفايل للعضو إلى الشكل الافتراضي.</p></div>
+        </div>
+
+        <div id="tab-log" class="tab-content">
+            <div class="cmd-card"><h4>/setlog</h4><p>تخصيص قناة لإرسال تقارير (بدء/انتهاء) المذاكرة.</p></div>
+            <div class="cmd-card"><h4>/setloggive</h4><p>مراقبة سجلات تحويل الأموال بين الطلاب.</p></div>
+            <div class="cmd-card"><h4>/setlogbgshop</h4><p>تتبع عمليات شراء الخلفيات من المتجر.</p></div>
+        </div>
+
+        <div id="tab-dev" class="tab-content">
+            <div class="cmd-card"><h4>/system</h4><p>مراقبة أداء السيرفر واستهلاك موارد النظام.</p></div>
+            <div class="cmd-card"><h4>/maintenance</h4><p>تفعيل وضع الصيانة للتحديثات البرمجية.</p></div>
+            <div class="cmd-card"><h4>/broadcast</h4><p>إرسال رسالة رسمية لجميع السيرفرات المشتركة.</p></div>
+            <div class="cmd-card"><h4>/blacklist</h4><p>حظر مستخدمين أو سيرفرات من الوصول لخدمات البوت.</p></div>
+        </div>
+    </section>
+
+    <section class="dev-section" id="developer">
+        <h2 style="text-align: center; margin-bottom: 50px;">خلف الكواليس</h2>
+        <div class="dev-container">
+            <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200604165341277/IMG_20260421_190355.jpg" alt="Developer" class="dev-img">
             <div class="dev-info">
                 <h3>Yasser</h3>
-                <span class="dev-tag">Developer ID: c.u7</span>
-                <p class="dev-bio">
-                    قام مطور البوت ببناء هذا النظام المتقدم من منطلق الشغف العميق بعالم البرمجة، وبهدف أساسي يتمثل في مساعدة الطلاب على تنظيم أوقاتهم وتسهيل العملية التعليمية داخل سيرفرات الديسكورد. 
-                    المشروع ليس مجرد أكواد برمجية، بل هو رؤية لخلق بيئة رقمية مستقرة، سريعة، وتحفيزية تساهم في بناء مجتمعات دراسية ناجحة، وتوفر على الإداريين ساعات من الجهد في إدارة السيرفرات.
-                </p>
-                <div class="social-links">
-                    <a href="https://discord.com/users/1082902543597834240" target="_blank" class="social-btn" title="Discord Account"><i class="fab fa-discord"></i></a>
-                    <a href="https://www.instagram.com/c_7eh?igsh=MW9mYjQ3dGpvMnM2Mg==" target="_blank" class="social-btn insta" title="Instagram Account"><i class="fab fa-instagram"></i></a>
+                <span class="dev-id">Developer ID: c.u7</span>
+                <p>صاحب ومطور المشروع، قام ببناء "Study Zone" من منطلق الشغف بالتطوير وبهدف خلق أداة تعليمية حقيقية تخدم الطلاب. يسعى المطور دائماً لتقديم حلول برمجية مبتكرة تجمع بين السرعة، الموثوقية، وسهولة الاستخدام لتوفير أفضل تجربة لمجتمع الديسكورد العربي.</p>
+                <div class="social-box">
+                    <a href="https://discord.com/users/1082902543597834240" target="_blank" class="social-link" title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.instagram.com/c_7eh?igsh=MW9mYjQ3dGpvMnM2Mg==" target="_blank" class="social-link insta" title="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>Study Zone Bot &copy; 2024. تم التطوير بواسطة Yasser.</p>
+        <p>Study Zone &copy; 2024 - جميع الحقوق محفوظة للمطور Yasser</p>
     </footer>
 
     <script>
-        function openTab(tabName) {
-            // إخفاء جميع المحتويات
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-                tabcontent[i].classList.remove("active");
-            }
-            
-            // إزالة التفعيل من جميع الأزرار
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            
-            // إظهار القسم المطلوب وتفعيل زره
-            document.getElementById(tabName).style.display = "block";
-            document.getElementById(tabName).classList.add("active");
-            event.currentTarget.classList.add("active");
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
     </script>
 </body>
