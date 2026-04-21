@@ -4,510 +4,529 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Zone Bot - الواجهة الرسمية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Modern Dark UI Styles */
+        /* Modern Dark UI Styles & Variables */
         :root {
-            --bg-color: #1a1b26;
-            --container-color: #24283b;
-            --text-color: #c0caf5;
-            --accent-color: #7aa2f7;
-            --success-color: #4cd964;
-            --warning-color: #ff9f1a;
-            --error-color: #ff3b30;
-            --discord-purple: #7289da;
+            --bg-color: #0f111a;
+            --container-color: #1a1d2d;
+            --card-color: #23273a;
+            --text-color: #a9b1d6;
+            --heading-color: #ffffff;
+            --accent-color: #5865F2; /* Discord Blurple */
+            --accent-hover: #4752C4;
+            --success-color: #3ba55c;
+            --warning-color: #faa61a;
+            --danger-color: #ed4245;
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
+        /* Typography & Layout */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 0 20px;
         }
 
-        /* Hero Section */
-        #hero {
-            text-align: center;
-            padding: 100px 0;
-            position: relative;
+        h1, h2, h3, h4 {
+            color: var(--heading-color);
+            font-weight: 700;
         }
 
-        #hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background-color: var(--accent-color);
-            filter: blur(150px);
-            opacity: 0.2;
-            z-index: -1;
-        }
-
-        .bot-logo {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 5px solid var(--accent-color);
-            box-shadow: 0 0 40px rgba(122, 162, 247, 0.5);
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-
-        .bot-logo:hover {
-            transform: scale(1.05);
-        }
-
-        .hero-title {
-            font-size: 3em;
-            color: #fff;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(122, 162, 247, 0.7);
-        }
-
-        .hero-tagline {
-            font-size: 1.2em;
-            color: var(--text-color);
-            margin-bottom: 40px;
-            opacity: 0.8;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 15px 40px;
-            background-color: var(--discord-purple);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 10px 20px rgba(114, 137, 218, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(114, 137, 218, 0.5);
-        }
-
-        .cta-button i {
-            margin-left: 10px;
-        }
-
-        /* Sections Styling */
-        section {
+        .section-padding {
             padding: 80px 0;
-            border-bottom: 1px solid rgba(192, 202, 245, 0.1);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        section-title {
+        .section-title {
             text-align: center;
             font-size: 2.5em;
-            color: #fff;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             position: relative;
         }
 
-        section-title::after {
+        .section-title::after {
             content: '';
             display: block;
-            width: 80px;
+            width: 60px;
             height: 4px;
             background-color: var(--accent-color);
             margin: 15px auto 0;
             border-radius: 2px;
         }
 
-        /* Features/Commands Grid */
-        .features-grid {
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            padding: 120px 0 80px;
+            position: relative;
+            background: radial-gradient(circle at top, rgba(88, 101, 242, 0.15) 0%, transparent 50%);
+        }
+
+        .bot-logo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 0 30px rgba(88, 101, 242, 0.4);
+            margin-bottom: 25px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-title {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .hero-tagline {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: #c0caf5;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(88, 101, 242, 0.3);
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(88, 101, 242, 0.5);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: -30px;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            background-color: var(--container-color);
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: var(--heading-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-value span {
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        /* Commands Section */
+        .commands-wrapper {
+            display: grid;
+            gap: 40px;
+        }
+
+        .cmd-category {
+            background-color: var(--container-color);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .cmd-category h3 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cmd-category h3 i {
+            color: var(--accent-color);
+        }
+
+        .cmd-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 15px;
         }
 
-        .feature-card {
-            background-color: var(--container-color);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(192, 202, 245, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
+        .cmd-item {
+            background-color: var(--card-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: background 0.2s;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(122, 162, 247, 0.2);
+        .cmd-item:hover {
+            background-color: rgba(88, 101, 242, 0.1);
         }
 
-        .feature-icon {
-            font-size: 2.5em;
-            color: var(--accent-color);
-            margin-bottom: 20px;
+        .cmd-name {
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--heading-color);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            width: fit-content;
         }
 
-        .feature-card h3 {
-            color: #fff;
-            font-size: 1.5em;
-            margin-bottom: 15px;
+        .cmd-desc {
+            font-size: 0.95em;
+            color: var(--text-color);
         }
 
-        .feature-card p {
-            font-size: 1em;
-            opacity: 0.9;
-        }
+        /* Category Specific Colors */
+        .cat-general i { color: #3498db !important; }
+        .cat-admin i { color: #3ba55c !important; }
+        .cat-logs i { color: #faa61a !important; }
+        .cat-dev i { color: #ed4245 !important; }
 
         /* Developer Section */
         #developer .container {
             display: flex;
             align-items: center;
             gap: 50px;
-            flex-wrap: wrap;
+            background-color: var(--container-color);
+            padding: 50px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
         }
 
         .dev-profile {
-            flex: 1;
-            text-align: center;
-            min-width: 300px;
-        }
-
-        .dev-avatar-container {
+            flex-shrink: 0;
             position: relative;
-            display: inline-block;
         }
 
         .dev-avatar {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            border: 4px solid var(--discord-purple);
-            box-shadow: 0 0 30px rgba(114, 137, 218, 0.4);
-            margin-bottom: 20px;
-        }
-
-        .status-dot {
-            position: absolute;
-            bottom: 25px;
-            right: 5px;
-            width: 30px;
-            height: 30px;
-            background-color: #23272a;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 4px solid var(--bg-color);
-        }
-
-        .status-dot::after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background-color: var(--success-color); /* Online status */
-            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            object-fit: cover;
         }
 
         .dev-info {
-            flex: 2;
-            min-width: 300px;
-            background-color: var(--container-color);
-            padding: 40px;
-            border-radius: 20px;
-            position: relative;
-        }
-
-        .dev-info::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 5em;
-            color: var(--discord-purple);
-            opacity: 0.1;
-            font-family: Arial, sans-serif;
+            flex-grow: 1;
         }
 
         .dev-name {
-            font-size: 2em;
-            color: #fff;
-            margin-bottom: 5px;
+            font-size: 2.2em;
+            color: var(--heading-color);
         }
 
-        .dev-username {
-            font-size: 1.1em;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-
-        .dev-links {
-            margin-top: 30px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .dev-links a {
-            color: var(--text-color);
-            font-size: 1.8em;
-            transition: color 0.2s, transform 0.2s;
-        }
-
-        .dev-links a:hover {
-            color: var(--accent-color);
-            transform: scale(1.1);
-        }
-
-        .dev-links a i.fa-instagram {
-            color: #e4405f;
-        }
-        .dev-links a:hover i.fa-instagram {
-            color: #fff;
-        }
-
-        /* Stats Section */
-        #stats {
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .stat-card {
-            background-color: var(--container-color);
-            padding: 30px;
-            border-radius: 20px;
-            position: relative;
-        }
-
-        .stat-value {
-            font-size: 3.5em;
-            font-weight: bold;
-            color: var(--success-color);
-            text-shadow: 0 0 10px rgba(76, 217, 100, 0.5);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 1.2em;
-            color: #fff;
-            opacity: 0.9;
-        }
-
-        /* Footer & Legals (Hidden by default for deep linking) */
-        footer {
-            text-align: center;
-            padding: 50px 0;
-            background-color: #14151e;
-            font-size: 0.9em;
-            border-top: 1px solid rgba(192, 202, 245, 0.05);
-        }
-
-        .legal-section {
-            display: none; /* Keep hidden on main page */
-            padding: 40px;
-            margin-top: 20px;
-            background-color: var(--container-color);
-            border-radius: 20px;
-            text-align: left; /* Privacy policy typically left aligned */
-        }
-
-        /* Show legal section only when linked via hash */
-        #terms:target .legal-section,
-        #privacy:target .legal-section {
-            display: block;
-        }
-
-        .legal-section h2 {
-            color: #fff;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .legal-section h3 {
-            color: var(--accent-color);
-            margin-top: 20px;
-        }
-
-        .back-to-top {
+        .dev-tag {
             display: inline-block;
-            margin-top: 30px;
+            background-color: rgba(88, 101, 242, 0.15);
             color: var(--accent-color);
-            text-decoration: none;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 10px 0 20px;
             font-weight: bold;
         }
 
-        /* Responsive adjustments */
+        .dev-bio {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--card-color);
+            color: var(--heading-color);
+            font-size: 1.3em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .social-links .insta:hover {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0b0c13;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.2em; }
-            section-title { font-size: 2em; }
-            #developer .container { flex-direction: column-reverse; }
+            .hero-title { font-size: 2.5em; }
+            #developer .container {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+            .social-links { justify-content: center; }
+            .cmd-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body id="top">
+<body>
+
+    <header id="hero">
+        <div class="container">
+            <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200598826123394/f124bf9a02c96bf350c17f9887072e72.png" alt="Study Zone Logo" class="bot-logo"> 
+            <h1 class="hero-title">Study Zone</h1>
+            <p class="hero-tagline">النظام الأذكى والأكثر تكاملاً لإدارة سيرفرات المذاكرة والدراسة على ديسكورد. حفز مجتمعك وتابع تقدمهم باحترافية.</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" class="cta-button" target="_blank">
+                <i class="fab fa-discord"></i> إضافة البوت لسيرفرك
+            </a>
+        </div>
+    </header>
 
     <div class="container">
-        <section id="hero">
-            <img src="https://i.imgur.com/uW60y8G.png" alt="Study Zone Logo" class="bot-logo"> 
-            <h1 class="hero-title">Study Zone Bot</h1>
-            <p class="hero-tagline">أداة واحدة متكاملة لتنظيم دراستك، تحفيزك، وبناء مجتمعك الدراسي.</p>
-            <a href="https://discord.com/oauth2/authorize?client_id=1082902543597834240" class="cta-button" target="_blank">
-                <i class="fab fa-discord"></i> أضف البوت لسيرفرك
-            </a>
-        </section>
-
-        <section id="features">
-            <h2 class="section-title">المميزات الأساسية</h2>
-            <div class="features-grid">
-                
-                <div class="feature-card">
-                    <i class="fas fa-brain feature-icon"></i>
-                    <h3>نظام المذاكرة المتطور</h3>
-                    <p>ابدأ وأوقف جلسات المذاكرة بلمسة زر. يقوم البوت بحساب وتخزين وقت مذاكرتك تلقائياً، ويعطيك إحصائيات دقيقة عن تقدمك الدراسي.</p>
-                </div>
-
-                <div class="feature-card">
-                    <i class="fas fa-chart-line feature-icon"></i>
-                    <h3>لوحات الأوائل</h3>
-                    <p>نافس أصدقائك! يعرض قسم الأوائل الطلاب الأكثر نشاطاً في السيرفر، مما يخلق جواً تحفيزياً رائعاً للمزيد من المذاكرة.</p>
-                </div>
-
-                <div class="feature-card">
-                    <i class="fas fa-coins feature-icon"></i>
-                    <h3>نظام العملات والمكافآت</h3>
-                    <p>اربح عملات مقابل مذاكرتك! يمكنك استخدام العملات في شراء ترقيات، أدوار، أو حتى تزيين بروفايلك الدراسي.</p>
-                </div>
-
-                <div class="feature-card">
-                    <i class="fas fa-palette feature-icon"></i>
-                    <h3>تخصيص البروفايل (Shop)</h3>
-                    <p>أنشئ كارت بروفايل فريد يعبر عنك! زر متجر البروفايل لتشتري خلفيات مميزة وتزيينات لأيقونة بروفايلك الدراسي.</p>
-                </div>
-
-                <div class="feature-card">
-                    <i class="fas fa-cogs feature-icon"></i>
-                    <h3>إدارة السيرفر واللوجات</h3>
-                    <p>أدوات متكاملة للمشرفين! نظام لوجات مفصل لتتبع جلسات المذاكرة، تحويلات العملات، وتغييرات البروفايل، لضمان إدارة سلسلة.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <i class="fas fa-bell feature-icon"></i>
-                    <h3>تنبيهات مخصصة</h3>
-                    <p>لا تفوت موعداً! احصل على إشعارات مخصصة للأحداث الهامة في السيرفر أو لنهاية جلسات المذاكرة.</p>
-                </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value"><span>+</span>75</div>
+                <div class="stat-label">سيرفر مذاكرة</div>
             </div>
-        </section>
-
-        <section id="stats">
-            <h2 class="section-title">إحصائيات Study Zone</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">+75</div>
-                    <div class="stat-label">سيرفر مذاكرة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">+2500</div>
-                    <div class="stat-label">طالب ومستخدم</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">+500</div>
-                    <div class="stat-label">مستخدم يومي نشط</div>
-                </div>
+            <div class="stat-card">
+                <div class="stat-value"><span>+</span>2500</div>
+                <div class="stat-label">طالب ومستخدم</div>
             </div>
-        </section>
-
-        <section id="developer">
-            <h2 class="section-title">خلف الكواليس: المطور</h2>
-            <div class="container">
-                <div class="dev-info">
-                    <h3 class="dev-name">Yasser</h3>
-                    <p class="dev-username">@c.u7</p>
-                    <p>"أنا مطور بوتات ديسكورد، بدأت رحلتي من الشغف والفضول. لم يعد عملي مجرد أكواد، بل تقديم حلول مبتكرة وتجربة مستخدم فائقة السرعة، السلاسة، والموثوقية. هدفي هو بناء أدوات لها تأثير حقيقي وتسهل حياة المستخدمين وتختصر عليهم الوقت."</p>
-                    <div class="dev-links">
-                        <a href="https://discord.com/users/1082902543597834240" target="_blank" title="My Discord Profile"><i class="fab fa-discord"></i></a>
-                        <a href="https://www.instagram.com/c_7eh?igsh=MW9mYjQ3dGpvMnM2Mg==" target="_blank" title="Instagram Profile"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="dev-profile">
-                    <div class="dev-avatar-container">
-                        <img src="https://i.imgur.com/gK34qD2.png" alt="Developer Avatar" class="dev-avatar">
-                        <div class="status-dot"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div> <footer>
-        <div class="container">
-            <p>&copy; 2024 Study Zone Bot. All rights reserved.</p>
-            <p>Developed with passion by <a href="#developer" style="color:var(--accent-color); text-decoration:none;">Yasser (c.u7)</a>.</p>
-            <p>
-                <a href="#terms" style="color:var(--text-color); margin: 0 10px;">Terms of Service</a> |
-                <a href="#privacy" style="color:var(--text-color); margin: 0 10px;">Privacy Policy</a>
-            </p>
-
-            <div id="terms">
-                <div class="legal-section">
-                    <h2>Terms of Service (ToS)</h2>
-                    <p>Last updated: June 1, 2024</p>
-                    <p>By adding or using the Study Zone Bot, you agree to these terms.</p>
-                    
-                    <h3>1. Usage of the Bot</h3>
-                    <p>Study Zone Bot is designed for educational and study-related purposes. Users agree not to use the bot to spam, harass, or interfere with other users' experience. Abuse of bot commands to disrupt Discord servers is strictly prohibited.</p>
-                    
-                    <h3>2. Coins and Virtual Items</h3>
-                    <p>Any coins, items, or ranks obtained within Study Zone are purely virtual and hold no real-world monetary value. The bot developer reserves the right to reset or modify user stats or balances in case of cheating, bugs, or system balance.</p>
-                    
-                    <h3>3. Disclaimer</h3>
-                    <p>The developer is not responsible for any data loss, service interruptions, or actions taken by server moderators. The bot is provided "as is" without warranties.</p>
-
-                    <a href="#top" class="back-to-top">Back to Main Page</a>
-                </div>
-            </div>
-
-            <div id="privacy">
-                <div class="legal-section">
-                    <h2>Privacy Policy</h2>
-                    <p>Last updated: June 1, 2024</p>
-                    <p>Study Zone Bot respects user privacy.</p>
-                    
-                    <h3>1. What Data is Collected?</h3>
-                    <p>To provide its services, Study Zone Bot collects minimal essential data:
-                        <ul>
-                            <li>Discord User ID and Server ID.</li>
-                            <li>Username and Avatar URL (for display on profiles).</li>
-                            <li>Study time data and virtual economy balance.</li>
-                        </ul>
-                    </p>
-                    
-                    <h3>2. How Data is Used?</h3>
-                    <p>Collected data is strictly used for core bot functionality (tracking study time, virtual shop purchases, and leaderboards). We **never** sell or share your data with third parties. We do not read your private messages.</p>
-                    
-                    <h3>3. Data Retention</h3>
-                    <p>Data is stored until the user or server owner deletes it, or until the bot is removed from the server. Users can request their data removal by contacting the developer via Discord.</p>
-
-                    <a href="#top" class="back-to-top">Back to Main Page</a>
-                </div>
+            <div class="stat-card">
+                <div class="stat-value"><span>+</span>500</div>
+                <div class="stat-label">مستخدم نشط يومياً</div>
             </div>
         </div>
-    </footer>
+    </div>
 
-</body>
-                  </html>
-                  
+    <section id="commands" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">دليل الأوامر الشامل</h2>
+            
+            <div class="commands-wrapper">
+                
+                <div class="cmd-category cat-general">
+                    <h3><i class="fas fa-globe"></i> الأوامر العامة (أوامر التايمر والمذاكرة والبروفايل)</h3>
+                    <div class="cmd-grid">
+                        <div class="cmd-item">
+                            <span class="cmd-name">/start</span>
+                            <span class="cmd-desc">بدء جلسة مذاكرة وتفعيل التايمر لحساب وقتك.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/stop</span>
+                            <span class="cmd-desc">إيقاف جلسة المذاكرة الحالية وحفظ تقدمك.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/coins</span>
+                            <span class="cmd-desc">معرفة رصيد الكوينز وعرض كارت البروفايل الخاص بك.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/give</span>
+                            <span class="cmd-desc">تحويل كوينز من حسابك لشخص آخر في السيرفر.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/top</span>
+                            <span class="cmd-desc">عرض قائمة أوائل المذاكرة والدراسة في السيرفر للمنافسة.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/ping</span>
+                            <span class="cmd-desc">فحص سرعة استجابة واتصال البوت.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/help</span>
+                            <span class="cmd-desc">عرض قائمة أوامر البوت المساعدة داخل الديسكورد.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cmd-category cat-admin">
+                    <h3><i class="fas fa-shield-alt"></i> أوامر الإدارة العادية (للمشرفين)</h3>
+                    <div class="cmd-grid">
+                        <div class="cmd-item">
+                            <span class="cmd-name">/addcoin</span>
+                            <span class="cmd-desc">إضافة كوينز مجانية إلى عضو معين (للمكافآت).</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/take</span>
+                            <span class="cmd-desc">سحب كمية محددة من الكوينز من حساب عضو.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/minuscoin</span>
+                            <span class="cmd-desc">سحب كوينز لعضو (يسمح بأن يكون الرصيد بالسالب للخصومات).</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/clearbgs</span>
+                            <span class="cmd-desc">مسح المشتريات وإرجاع الخلفية الافتراضية لبروفايل العضو.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cmd-category cat-logs">
+                    <h3><i class="fas fa-clipboard-list"></i> أوامر إعدادات اللوج (سري)</h3>
+                    <div class="cmd-grid">
+                        <div class="cmd-item">
+                            <span class="cmd-name">/setlog & /disablelog</span>
+                            <span class="cmd-desc">تفعيل/تعطيل تقرير بدأ ونهاية تايمرات المذاكرة.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/setloggive & /disable...</span>
+                            <span class="cmd-desc">تفعيل/تعطيل تقارير الحوالات المالية بين اللاعبين.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/setlogreset & /disable...</span>
+                            <span class="cmd-desc">تفعيل/تعطيل تقارير إفراغ جيوب ومحفظات الأعضاء.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/setlogresetstats</span>
+                            <span class="cmd-desc">تفعيل/تعطيل تقارير تصفير ساعات المذاكرة للأعضاء.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/setlogbgshop</span>
+                            <span class="cmd-desc">تفعيل/تعطيل تقارير متجر صور البروفايل المشتراة.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cmd-category cat-dev">
+                    <h3><i class="fas fa-laptop-code"></i> أوامر المطورين (خطر - نظام التحكم والصيانة)</h3>
+                    <div class="cmd-grid">
+                        <div class="cmd-item">
+                            <span class="cmd-name">/system</span>
+                            <span class="cmd-desc">عرض شامل لحالة السيرفر واستهلاك الرامات.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/maintenance</span>
+                            <span class="cmd-desc">إغلاق البوت مؤقتاً لعمل التحديثات والصيانة.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/blacklist</span>
+                            <span class="cmd-desc">منع عضو محدد من استخدام النظام بالكامل (مع إمكانية عرض القائمة).</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/addperm & /removeperm</span>
+                            <span class="cmd-desc">توزيع وإزالة صلاحيات الإدارة للمشرفين (مع أمر /permslist للعرض).</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/resetcoins</span>
+                            <span class="cmd-desc">تصفير شامل للعملات (أو تخصيص لعضو معين بـ /resetusercoins).</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/resetallstats</span>
+                            <span class="cmd-desc">مسح وحذف إحصائيات الدقائق والمذاكرة للجميع أو لمستخدم محدد.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/set2xcoins</span>
+                            <span class="cmd-desc">تخصيص رومات دبل كوينز للفعاليات والأحداث الخاصة.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/broadcast</span>
+                            <span class="cmd-desc">نشر إشعار بنظام إمبد مهم لأي روم مع تحديد منشن.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/inspect & /transfers</span>
+                            <span class="cmd-desc">تفتيش تاريخ وإحصائيات متقدمة ومتابعة السجلات المالية للعضو.</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/shop & /bgshop</span>
+                            <span class="cmd-desc">متاجر شراء الرتب وخلفيات البروفايل (أوامر مخصصة للمطور فقط).</span>
+                        </div>
+                        <div class="cmd-item">
+                            <span class="cmd-name">/botinfo & /servers</span>
+                            <span class="cmd-desc">عرض أوامر النظام الشاملة وعناوين السيرفرات المتصلة بالبوت.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="developer" class="section-padding">
+        <h2 class="section-title">المُطوّر</h2>
+        <div class="container">
+            <div class="dev-profile">
+                <img src="https://cdn.discordapp.com/attachments/1495634482785681618/1496200604165341277/IMG_20260421_190355.jpg" alt="Yasser Avatar" class="dev-avatar">
+            </div>
+            <div class="dev-info">
+                <h3 class="dev-name">Yasser (Yassrr)</h3>
+                <span class="dev-tag"><i class="fas fa-code"></i> Discord Bot Developer | ID: c.u7</span>
+                <p class="dev-bio">
+                    مرحباً! أنا ياسر، مبرمج ومطور شغوف ببناء أدوات وحلول برمجية ذكية. 
+                    بدأت تطوير <strong>Study Zone</strong> بهدف واحد: إنشاء بيئة رقمية تساعد الطلاب على التركيز، إدارة وقتهم، وخلق روح التنافس الإيجابي. 
+                    أؤمن بأن كتابة الكود ليست مجرد أوامر برمجية، بل هي فن صناعة تجربة مستخدم سلسة، سريعة، وموثوقة. 
+                    أعمل دائماً على تطوير مهاراتي لتقديم أفضل الأدوات التي تختصر الوقت وتصنع فارقاً حقيقياً في مجتمعات الديسكورد.
+             
